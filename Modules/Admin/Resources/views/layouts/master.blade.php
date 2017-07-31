@@ -4,9 +4,10 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Module Admin</title>
+        <title>@yield('title')</title>
     </head>
     <body>
+        <?php var_dump($controller);?>
         @yield('content')
     </body>
 </html>

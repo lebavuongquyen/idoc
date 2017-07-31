@@ -70,6 +70,16 @@ class AdminServiceProvider extends ServiceProvider
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/admin';
         }, \Config::get('view.paths')), [$sourcePath]), 'admin');
+        
+        app('view')->composer('admin::layouts.master',
+                              function ($view) {
+            $action = app('request')->route()->getAction();
+            $controller = class_basename($action['controller']);
+
+            list($controller, $action) = explode('@', $controller);
+
+            $view->with(compact('controller', 'action'));
+        });
     }
 
     /**
