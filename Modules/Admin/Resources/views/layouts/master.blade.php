@@ -7,7 +7,7 @@
         <title>@yield('title')</title>
     </head>
     <body>
-        <?php var_dump($controller);?>
+        <?php var_dump(Module::getAssetsPath('admin::'));?>
         @yield('content')
     </body>
 </html>
