@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        @include('admin::layouts.meta')
+
         <title>@yield('title')</title>
+        @include('admin::layouts.css')
+
     </head>
-    <body>
-        <?php var_dump(Module::getAssetsPath('admin::'));?>
-        @yield('content')
+
+    <body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+                <div class="col-md-3 left_col">
+                    @include('admin::layouts.left_col')
+                </div>
+
+                @include('admin::layouts.top_navigation')
+
+                <!-- page content -->
+                <div class="right_col" role="main">
+                    <div>
+                        @yield('content')
+                    </div>
+                </div>
+                <!-- /page content -->
+
+                @yield('admin::layouts.footer')
+            </div>
+        </div>
     </body>
+    @include('admin::layouts.js')
+    @yield('script')
 </html>

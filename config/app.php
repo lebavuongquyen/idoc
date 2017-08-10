@@ -178,6 +178,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Nwidart\Modules\LaravelModulesServiceProvider::class,
+        App\Providers\HelperServiceProvider::class,
+        App\Providers\UtilServiceProvider::class,
     ],
 
     /*

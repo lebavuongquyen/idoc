@@ -4,7 +4,8 @@
     </IfModule>
 
     RewriteEngine On
-
+    # Allow css, js
+    RewriteCond %{REQUEST_URI} !\.(?:css|js)$ [NC]
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
