@@ -60,9 +60,9 @@ var Util = {
                 }
             },
             error: function(xhr) {
-                if(xhr.status === 401 && !$('.show-login-error').length) {
+                if(xhr.status === 401 && ! $('.show-login-error').length) {
                     Interval.clearAll();
-                    return ;
+                    return;
                 }
                 if(xhr.statusText !== 'abort') {
                     if(typeof $options.error === 'function') {
@@ -502,7 +502,8 @@ var Util = {
                         }).catch(function(error) {
                             console.log(error);
                         });
-                    }s
+                    }
+                    s
                 }
             });
         }
@@ -669,8 +670,8 @@ var Widget = {
                 _modal.find('.modal-dialog').width(_data.width || null);
                 _modal.on('hidden.bs.modal', function() {
                     $(this).remove();
-                    if(typeof _data.callback === 'function'){
-                        _data.callback(_modal , _id);
+                    if(typeof _data.callback === 'function') {
+                        _data.callback(_modal, _id);
                     }
                 });
                 _modal.modal();
@@ -948,7 +949,8 @@ var Reg = {
     HHmmss: /([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]/,
 };
 var SSKEY = {
-    INTERVAL: 'INTERVAL'
+    INTERVAL: 'INTERVAL',
+    TIMEOUT: 'TIMEOUT'
 };
 
 var Interval = {
@@ -957,7 +959,7 @@ var Interval = {
         var _keys = Object.keys(arguments);
         var _listArgs = arguments;
         _keys = _keys.slice(3, _keys.length);
-        var _list = Interval.all();
+        var _list = this.all();
         var _args = [];
         _keys.forEach(function(_k) {
             _args.push(_listArgs[parseInt(_k)]);
@@ -981,7 +983,7 @@ var Interval = {
         return this.all()[$key];
     },
     clear: function($key) {
-        var _list = Interval.all();
+        var _list = this.all();
         for(var _key in _list) {
             if($key instanceof RegExp) {
                 if($key.test(_key)) {
@@ -1022,6 +1024,79 @@ var Interval = {
             clearInterval(_list[_key]);
         }
         return SS.set(SSKEY.INTERVAL, null);
+    }
+};
+var Timeout = {
+    set: function($key, $func, $time) {
+        var _func = $func;
+        var _keys = Object.keys(arguments);
+        var _listArgs = arguments;
+        _keys = _keys.slice(3, _keys.length);
+        var _list = this.all();
+        var _args = [];
+        _keys.forEach(function(_k) {
+            _args.push(_listArgs[parseInt(_k)]);
+        });
+        if(_list[$key]) {
+            clearTimeout(_list[$key]);
+        }
+        if(typeof _func === 'function') {
+            _list[$key] = setTimeout(function() {
+                QLog.log('Timeout[' + $key + ']:' + (new Date()));
+                _func.apply(null, _args);
+            }, $time);
+            SS.set(SSKEY.TIMEOUT, _list);
+        }
+        else {
+            QLog.log('Param 2 must be a function.' + (typeof _func) + ' is sent', $key, _func);
+        }
+        return _list[$key];
+    },
+    get: function($key) {
+        return this.all()[$key];
+    },
+    clear: function($key) {
+        var _list = this.all();
+        for(var _key in _list) {
+            if($key instanceof RegExp) {
+                if($key.test(_key)) {
+                    clearTimeout(_list[_key]);
+                    delete _list[_key];
+                }
+            }
+            else {
+                if(_key === $key) {
+                    clearTimeout(_list[_key]);
+                    delete _list[_key];
+                    SS.set(SSKEY.TIMEOUT, _list);
+                    return true;
+                }
+            }
+        }
+        SS.set(SSKEY.TIMEOUT, _list);
+        return true;
+    },
+    clearList: function($keys) {
+        var _list = Timeout.all();
+        for(var _key in _list) {
+            if($keys.indexOf(_key) > - 1) {
+                clearTimeout(_list[_key]);
+                delete _list[_key];
+                SS.set(SSKEY.TIMEOUT, _list);
+                return true;
+            }
+        }
+        return false;
+    },
+    all: function() {
+        return SS.get(SSKEY.TIMEOUT) || {};
+    },
+    clearAll: function() {
+        var _list = Timeout.all();
+        for(var _key in _list) {
+            clearTimeout(_list[_key]);
+        }
+        return SS.set(SSKEY.TIMEOUT, null);
     }
 };
 

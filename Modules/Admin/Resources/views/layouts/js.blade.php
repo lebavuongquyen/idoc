@@ -35,7 +35,11 @@
 <!-- bootstrap-daterangepicker -->
 <script src="{{qasset('public/vendors')}}/moment/min/moment.min.js"></script>
 <script src="{{qasset('public/vendors')}}/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="{{qasset('public/vendors')}}/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="{{qasset('public/vendors')}}/jquery-validation/dist/additional-methods.js"></script>
+<script src="{{qasset('public/vendors')}}/lockscreen/js/lockscreen.js"></script>
+<script src="{{qasset('public/vendors')}}/lockscreen/js/lockscreen-icon.js"></script>
 @yield('js_plugin')
 <!-- Custom Theme Scripts -->
+<script src="{{qasset('public/js/utilities.js')}}"></script>
 <script src="{{module_asset_url('admin')}}/build/js/custom.js"></script>
-<script src="{{qasset('public/js/lockscreen.js')}}"></script>

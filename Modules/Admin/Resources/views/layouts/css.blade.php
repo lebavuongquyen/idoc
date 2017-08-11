@@ -13,6 +13,7 @@
 <link href="{{qasset('public/vendors')}}/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
 <!-- bootstrap-daterangepicker -->
 <link href="{{qasset('public/vendors')}}/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+<link href="{{qasset('public/vendors')}}/lockscreen/css/lockscreen.css" rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="{{module_asset_url('admin')}}/build/css/custom.min.css" rel="stylesheet">

@@ -1,0 +1,47 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 11, 2017, 11:57:24 AM
+    Author     : TDM01
+*/
+
+.lock-screen-wrapper {
+    position: fixed;
+    top:0px;
+    left:0px;
+    width:100vw;
+    height:100vh;
+    z-index: 8000;
+}
+
+.lock-screen-wrapper>div {
+    position: fixed;
+    top:0px;
+    left:0px;
+    width:100vw;
+    height:100vh;
+}
+
+.lock-screen-overlay {
+    background: #000;
+    z-index: 1;
+    background: #000;
+    opacity: 0.8;
+}
+
+.lock-screen-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index:4;
+}
+
+.lock-screen-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index:3;
+}
