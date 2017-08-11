@@ -35,7 +35,7 @@
 <!-- bootstrap-daterangepicker -->
 <script src="{{qasset('public/vendors')}}/moment/min/moment.min.js"></script>
 <script src="{{qasset('public/vendors')}}/bootstrap-daterangepicker/daterangepicker.js"></script>
-
+@yield('js_plugin')
 <!-- Custom Theme Scripts -->
 <script src="{{module_asset_url('admin')}}/build/js/custom.js"></script>
 <script src="{{qasset('public/js/lockscreen.js')}}"></script>
