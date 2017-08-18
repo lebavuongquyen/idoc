@@ -1,4 +1,5 @@
 /* global baseUrl,stopReloader,$, jQuery, startReloader, moment, createUrl, ss, Notification */
+var AjaxList = [];
 var QLog = function($type) {
     var args = [];
     Array.prototype.push.apply(args, arguments);
@@ -1398,3 +1399,168 @@ if(window.ss) {
         }
     };
 }
+
+
+if(! Object.keys) {
+    Object.keys = (function() {
+        var hasOwnProperty = Object.prototype.hasOwnProperty,
+            hasDontEnumBug = ! ({toString: null}).propertyIsEnumerable('toString'),
+            dontEnums = [
+                'toString',
+                'toLocaleString',
+                'valueOf',
+                'hasOwnProperty',
+                'isPrototypeOf',
+                'propertyIsEnumerable',
+                'constructor'
+            ],
+            dontEnumsLength = dontEnums.length;
+
+        return function(obj) {
+            if(typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
+                throw new TypeError('Object.keys called on non-object');
+            }
+
+            var result = [], prop, i;
+
+            for(prop in obj) {
+                if(hasOwnProperty.call(obj, prop)) {
+                    result.push(prop);
+                }
+            }
+
+            if(hasDontEnumBug) {
+                for(i = 0; i < dontEnumsLength; i ++) {
+                    if(hasOwnProperty.call(obj, dontEnums[i])) {
+                        result.push(dontEnums[i]);
+                    }
+                }
+            }
+            return result;
+        };
+    }());
+}
+
+
+function htmlDecode(value) {
+    return $("<textarea/>").html(value).text();
+}
+
+function htmlEncode(value) {
+    return $('<textarea/>').text(value).html();
+}
+
+$.htmlDecode = htmlDecode;
+$.htmlEncode = htmlEncode;
+
+String.prototype.encode = function() {
+    return this.replace(/[&"'\<\>]/g, function(c) {
+        switch(c) {
+            case "&":
+                return "&amp;";
+            case "'":
+                return "&#39;";
+            case '"':
+                return "&quot;";
+            case "<":
+                return "&lt;";
+            case ">":
+                return "&gt;";
+        }
+    });
+};
+
+String.prototype.decode = function() {
+    return this.replace(/\&(amp|\#39|quot|lt|gt)\;/g, function(c) {
+        switch(c) {
+            case "&amp;":
+                return "&";
+            case "&#39;":
+                return "'";
+            case "&quot;":
+                return '"';
+            case "&lt;":
+                return "<";
+            case "&gt;":
+                return ">";
+        }
+    });
+};
+
+
+String.prototype.capitalize = function(all) {
+    if(this.length === 0) {
+        return '';
+    }
+    var str = this.toLowerCase();
+    if(! all) {
+        return str[0].toUpperCase() + str.substr(1);
+    }
+    return str.replace(/(^|\s|-|_|\t|\n|\v)([a-z])/g, function(m, p1, p2) {
+        return p1 + p2.toUpperCase();
+    });
+};
+
+String.prototype.format = function(col) {
+    var _col = typeof col === 'object' ? col : arguments;
+    return this.replace(/\{\{(\w+)\}\}|\{(\w+)\}/g, function(c , m, n ) {
+        var _data = typeof _col[m || n] === 'function'? _col[m || n]() : _col[m || n];
+        return m ? _data.encode() : _data;
+    });
+};
+
+function getYesNo(value) {
+    if(typeof (value) === 'undefined' || value + '' === '0') {
+        return Lang.Comon.no.capitalize();
+    }
+    return Lang.Comon.yes.capitalize();
+}
+
+function emptyFromColumn($column) {
+    var _column = $column || [];
+    var _object = {};
+    _column.forEach(function(x) {
+        if(x.field) {
+            _object[x.field] = '';
+        }
+    });
+    return _object;
+}
+
+function emptyFromObj($obj) {
+    var _object = {};
+    Object.keys($obj).forEach(function(x) {
+        if(x) {
+            _object[x] = '';
+        }
+    });
+    return _object;
+}
+
+function arrayMin($arr, $length, $emptyObj) {
+    var _arr = $arr || [];
+    var _length = $length || 10;
+    var _obj = {};
+    if(! $emptyObj && _arr.length > 0) {
+        Object.keys(_arr[0]).forEach(function(x) {
+            _obj[x] = '';
+        });
+    }
+    else {
+        _obj = $emptyObj;
+    }
+    if(_arr.length < _length) {
+        for(var i = _arr.length; i <= _length; i ++) {
+            _arr.push(_obj);
+        }
+    }
+    return _arr;
+}
+
+window.onbeforeunload = window.onunload = function() {
+    $.fn.showLoading();
+    for(var x in AjaxList) {
+        AjaxList[x].abort();
+    }
+    return null;
+};

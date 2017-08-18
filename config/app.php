@@ -171,15 +171,17 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        IDoc\Providers\AppServiceProvider::class,
+        IDoc\Providers\AuthServiceProvider::class,
+        // IDoc\Providers\BroadcastServiceProvider::class,
+        IDoc\Providers\EventServiceProvider::class,
+        IDoc\Providers\RouteServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Nwidart\Modules\LaravelModulesServiceProvider::class,
-        App\Providers\HelperServiceProvider::class,
-        App\Providers\UtilServiceProvider::class,
+        IDoc\Providers\HelperServiceProvider::class,
+        IDoc\Providers\UtilServiceProvider::class,
+        Reliese\Coders\CodersServiceProvider::class,
+        Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class,
     ],
 
     /*

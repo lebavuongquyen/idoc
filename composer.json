@@ -10,10 +10,12 @@
         "doctrine/dbal": "^2.6",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "nwidart/laravel-modules": "^1.27"
+        "nwidart/laravel-modules": "^1.27",
+        "reliese/laravel": "^0.0.13"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
+        "krlove/eloquent-model-generator": "^1.2",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.7"
     },
@@ -23,7 +25,7 @@
             "database/factories"
         ],
         "psr-4": {
-            "App\\": "app/",
+            "IDoc\\": "app/",
             "Modules\\":"Modules/"
         }
     },

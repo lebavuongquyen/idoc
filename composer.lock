@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dcf0e4c549891296344b4fe893e2d10a",
-    "content-hash": "0eee9813952bbfca8b70c2c3a5fa7e4f",
+    "hash": "13c4706799a0916f8064abbd8a4e0f0c",
+    "content-hash": "d47e8bf73f5d59715182a54caacc27f9",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -1585,6 +1585,58 @@
             "time": "2017-03-26 20:37:53"
         },
         {
+            "name": "reliese/laravel",
+            "version": "v0.0.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reliese/laravel.git",
+                "reference": "10075c5f5e67efba18d781216ff5a0ffa3fc2d7f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reliese/laravel/zipball/10075c5f5e67efba18d781216ff5a0ffa3fc2d7f",
+                "reference": "10075c5f5e67efba18d781216ff5a0ffa3fc2d7f",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "~2.5",
+                "illuminate/console": "~5.1",
+                "illuminate/contracts": "~5.1",
+                "illuminate/database": "~5.1",
+                "illuminate/filesystem": "~5.1",
+                "illuminate/support": "~5.1",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "~1.4",
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Reliese\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cristian Llanos",
+                    "email": "cristianllanos@outlook.com"
+                }
+            ],
+            "description": "Reliese Components for Laravel Framework code generation.",
+            "homepage": "http://cristianllanos.com",
+            "keywords": [
+                "laravel",
+                "reliese"
+            ],
+            "time": "2017-02-04 15:50:39"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.8",
             "source": {
@@ -2687,6 +2739,65 @@
                 "test"
             ],
             "time": "2015-05-11 14:41:42"
+        },
+        {
+            "name": "krlove/code-generator",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/krlove/code-generator.git",
+                "reference": "c1f0cb6898c5e378528c095d54623171e62ee1c3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/krlove/code-generator/zipball/c1f0cb6898c5e378528c095d54623171e62ee1c3",
+                "reference": "c1f0cb6898c5e378528c095d54623171e62ee1c3",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Krlove\\CodeGenerator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Code Generator",
+            "time": "2016-04-03 14:09:31"
+        },
+        {
+            "name": "krlove/eloquent-model-generator",
+            "version": "1.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/krlove/eloquent-model-generator.git",
+                "reference": "1af5dafb6bf4c2976b4db0325650b136697120ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/krlove/eloquent-model-generator/zipball/1af5dafb6bf4c2976b4db0325650b136697120ae",
+                "reference": "1af5dafb6bf4c2976b4db0325650b136697120ae",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^2.5",
+                "krlove/code-generator": "^1.0",
+                "laravel/framework": "^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Krlove\\EloquentModelGenerator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Eloquent Model Generator",
+            "time": "2017-07-19 10:24:07"
         },
         {
             "name": "mockery/mockery",

@@ -175,7 +175,7 @@ var LockScreen = function($opt) {
 
 LockScreen.prototype.setEvent = function() {
     var self = this;
-    $(window)
+    $('body')
         .unbind('click')
         .unbind('keypress')
         .bind({
@@ -183,7 +183,12 @@ LockScreen.prototype.setEvent = function() {
                 self.setWatcher();
             },
             keypress: function(e) {
-                self.setWatcher();
+                if ($('.lock-screen-wrapper').length) {
+                    self.unlock();
+                }
+                else {
+                    self.setWatcher();
+                }
             }
         });
     $('body').on('click', '.lock-screen-wrapper', function(event) {
@@ -217,18 +222,24 @@ LockScreen.prototype.setWatcher = function() {
 };
 
 LockScreen.prototype.lock = function() {
+    if(typeof this.options.beforeLock === 'function') {
+        this.options.beforeLock();
+    }
     $('body').append(this.screen());
     this.setIcon();
-    if(typeof this.options.lock === 'function') {
-        this.options.lock();
+    if(typeof this.options.afterLock === 'function') {
+        this.options.afterLock();
     }
 };
 
 LockScreen.prototype.unlock = function() {
-    if(typeof this.options.unlock === 'function') {
-        this.options.unlock();
+    if(typeof this.options.beforeUnlock === 'function') {
+        this.options.beforeUnlock();
     }
     $('.lock-screen-wrapper').remove();
+    if(typeof this.options.afterUnlock === 'function') {
+        this.options.afterUnlock();
+    }
 };
 
 LockScreen.prototype.enable = function() {
@@ -273,3 +284,7 @@ LockScreen.prototype.setIcon = function($icon) {
         icon.init();
     }
 };
+var lockScreen;
+$(document).ready(function(){
+    lockScreen = new LockScreen({timeout:3000 , icon : 'bike'});
+});
