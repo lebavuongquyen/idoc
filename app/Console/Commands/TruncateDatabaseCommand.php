@@ -4,14 +4,14 @@ namespace IDoc\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class DropDb extends Command
+class TruncateDatabaseCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:dropdb {database?}';
+    protected $signature = 'db:truncate {database?}';
 
     /**
      * The console command description.
@@ -38,7 +38,7 @@ class DropDb extends Command
     public function handle()
     {
         //
-        $database = $this->argument('database');
+        $database = $this->argument('database' , env('DB_DATABASE'));
         
         if($database == "all" || empty($database)) {
             $databases = array(env('DB_CONNECTION'));

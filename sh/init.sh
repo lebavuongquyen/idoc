@@ -56,7 +56,8 @@ mv './_ide_helper.php' './app/_ide_helper.php'
 composer dump-autoload
 
 log "\nReset the database "
-php artisan command:dropdb
+func_env DB_DATABASE
+php artisan db:create $DB_DATABASE --F
 php artisan migrate
 
 log "\nGenerate Models"

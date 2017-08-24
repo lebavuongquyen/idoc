@@ -28,6 +28,6 @@ find uploads/ -type f -exec chmod 777 {} \;
 find sh/ -type d -exec chmod 777 {} \;
 find sh/ -type f -exec chmod 775 {} \;
 find storage/ -type d -exec chmod 777 {} \;
-find storage/ -type f -exec chmod 775 {} \;
+#find storage/ -type f -exec chmod 775 {} \;
 find vendor/ -type d -exec chmod 777 {} \;
-find vendor/ -type f -exec chmod 775 {} \;
+#find vendor/ -type f -exec chmod 775 {} \;

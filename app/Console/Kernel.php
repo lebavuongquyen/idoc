@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \IDoc\Console\Commands\DropDb::class
+        \IDoc\Console\Commands\TruncateDatabaseCommand::class,
+        \IDoc\Console\Commands\DatabaseCreateCommand::class
     ];
 
     /**
