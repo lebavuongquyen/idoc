@@ -4,9 +4,135 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "13c4706799a0916f8064abbd8a4e0f0c",
-    "content-hash": "d47e8bf73f5d59715182a54caacc27f9",
+    "hash": "2c9b29f382494d24b5a4c2d0736fc321",
+    "content-hash": "b5094fa26dc67c00acdf824cb18ad87f",
     "packages": [
+        {
+            "name": "arcanedev/settings",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ARCANEDEV/Settings.git",
+                "reference": "8e08dadc29d5a47c64099454696100babb356530"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ARCANEDEV/Settings/zipball/8e08dadc29d5a47c64099454696100babb356530",
+                "reference": "8e08dadc29d5a47c64099454696100babb356530",
+                "shasum": ""
+            },
+            "require": {
+                "arcanedev/support": "~3.0",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "phpunit/phpcov": "~2.0|~3.0",
+                "phpunit/phpunit": "~4.0|~5.0"
+            },
+            "suggest": {
+                "illuminate/database": "Save settings to a database table.",
+                "illuminate/filesystem": "Save settings to a JSON file."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Arcanedev\\Settings\\": "src/"
+                },
+                "files": [
+                    "helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ARCANEDEV",
+                    "email": "arcanedev.maroc@gmail.com",
+                    "homepage": "https://github.com/ARCANEDEV",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Persistent settings for Laravel.",
+            "homepage": "https://github.com/ARCANEDEV/Settings",
+            "keywords": [
+                "Settings",
+                "arcanedev",
+                "config",
+                "database",
+                "json",
+                "laravel",
+                "persistent",
+                "setting"
+            ],
+            "abandoned": "arcanedev/laravel-settings",
+            "time": "2016-04-16 17:19:56"
+        },
+        {
+            "name": "arcanedev/support",
+            "version": "3.21.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ARCANEDEV/Support.git",
+                "reference": "a4913355a537c71b22899ee9b932dbeb5ed229a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ARCANEDEV/Support/zipball/a4913355a537c71b22899ee9b932dbeb5ed229a9",
+                "reference": "a4913355a537c71b22899ee9b932dbeb5ed229a9",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/filesystem": "~5.0",
+                "illuminate/support": "~5.0",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "phpunit/phpcov": "~3.0",
+                "phpunit/phpunit": "~5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Arcanedev\\Support\\": "src/"
+                },
+                "files": [
+                    "constants.php",
+                    "helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ARCANEDEV",
+                    "email": "arcanedev.maroc@gmail.com",
+                    "homepage": "https://github.com/arcanedev-maroc"
+                }
+            ],
+            "description": "ARCANEDEV Support Helpers",
+            "homepage": "https://github.com/ARCANEDEV/Support",
+            "keywords": [
+                "arcanedev",
+                "arcanesoft",
+                "laravel",
+                "support"
+            ],
+            "time": "2017-03-21 16:12:55"
+        },
         {
             "name": "barryvdh/laravel-ide-helper",
             "version": "v2.4.1",
@@ -769,16 +895,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.4.34",
+            "version": "v5.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "eaa09c998b315af9fbec04ad29ecfbfd2aa88aeb"
+                "reference": "54aa18a4e8495c4b6902d9665ec9fa4d3a1f3d2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/eaa09c998b315af9fbec04ad29ecfbfd2aa88aeb",
-                "reference": "eaa09c998b315af9fbec04ad29ecfbfd2aa88aeb",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/54aa18a4e8495c4b6902d9665ec9fa4d3a1f3d2e",
+                "reference": "54aa18a4e8495c4b6902d9665ec9fa4d3a1f3d2e",
                 "shasum": ""
             },
             "require": {
@@ -894,7 +1020,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-08-23 20:31:28"
+            "time": "2017-08-24 12:30:18"
         },
         {
             "name": "laravel/tinker",

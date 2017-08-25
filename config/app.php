@@ -182,6 +182,7 @@ return [
         IDoc\Providers\UtilServiceProvider::class,
         Reliese\Coders\CodersServiceProvider::class,
         Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class,
+        Arcanedev\Settings\SettingsServiceProvider::class,
     ],
 
     /*
@@ -196,7 +197,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
@@ -231,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Module' => Nwidart\Modules\Facades\Module::class,
+        'Setting' => Arcanedev\Settings\Facades\Setting::class,
     ],
 
 ];

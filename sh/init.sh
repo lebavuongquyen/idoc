@@ -61,6 +61,7 @@ log "\nReset the database "
 func_env DB_DATABASE
 php artisan db:create $DB_DATABASE -F
 php artisan migrate
+php artisan db:seed --class=DatabaseSeeder
 
 log "\nGenerate Models"
 php artisan code:models

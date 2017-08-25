@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.34 on 2017-08-24.
+ * Generated for Laravel 5.4.35 on 2017-08-25.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1581,7 +1581,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the currently authenticated user.
          *
-         * @return \IDoc\User|null 
+         * @return \IDoc\Models\User|null 
          * @static 
          */ 
         public static function user()
@@ -1616,7 +1616,7 @@ namespace Illuminate\Support\Facades {
          * Log the given user ID into the application without sessions or cookies.
          *
          * @param mixed $id
-         * @return \IDoc\User|false 
+         * @return \IDoc\Models\User|false 
          * @static 
          */ 
         public static function onceUsingId($id)
@@ -1680,7 +1680,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param mixed $id
          * @param bool $remember
-         * @return \IDoc\User|false 
+         * @return \IDoc\Models\User|false 
          * @static 
          */ 
         public static function loginUsingId($id, $remember = false)
@@ -1727,7 +1727,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \IDoc\User 
+         * @return \IDoc\Models\User 
          * @static 
          */ 
         public static function getLastAttempted()
@@ -1852,7 +1852,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Return the currently cached user.
          *
-         * @return \IDoc\User|null 
+         * @return \IDoc\Models\User|null 
          * @static 
          */ 
         public static function getUser()
@@ -1898,7 +1898,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if the current user is authenticated.
          *
-         * @return \IDoc\User 
+         * @return \IDoc\Models\User 
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */ 
@@ -12113,6 +12113,108 @@ namespace Nwidart\Modules\Facades {
  
 }
 
+namespace Arcanedev\Settings\Facades { 
+
+    class Setting {
+        
+        /**
+         * Get the default driver name.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getDefaultDriver()
+        {
+            return \Arcanedev\Settings\SettingsManager::getDefaultDriver();
+        }
+        
+        /**
+         * Create the Json driver store.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function createJsonDriver()
+        {
+            return \Arcanedev\Settings\SettingsManager::createJsonDriver();
+        }
+        
+        /**
+         * Create the Database driver store.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function createDatabaseDriver()
+        {
+            return \Arcanedev\Settings\SettingsManager::createDatabaseDriver();
+        }
+        
+        /**
+         * Create the Memory driver store.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function createMemoryDriver()
+        {
+            return \Arcanedev\Settings\SettingsManager::createMemoryDriver();
+        }
+        
+        /**
+         * Create the Array driver store.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function createArrayDriver()
+        {
+            return \Arcanedev\Settings\SettingsManager::createArrayDriver();
+        }
+        
+        /**
+         * Get a driver instance.
+         *
+         * @param string $driver
+         * @return mixed 
+         * @static 
+         */ 
+        public static function driver($driver = null)
+        {
+            //Method inherited from \Illuminate\Support\Manager            
+            return \Arcanedev\Settings\SettingsManager::driver($driver);
+        }
+        
+        /**
+         * Register a custom driver creator Closure.
+         *
+         * @param string $driver
+         * @param \Closure $callback
+         * @return $this 
+         * @static 
+         */ 
+        public static function extend($driver, $callback)
+        {
+            //Method inherited from \Illuminate\Support\Manager            
+            return \Arcanedev\Settings\SettingsManager::extend($driver, $callback);
+        }
+        
+        /**
+         * Get all of the created "drivers".
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getDrivers()
+        {
+            //Method inherited from \Illuminate\Support\Manager            
+            return \Arcanedev\Settings\SettingsManager::getDrivers();
+        }
+         
+    }
+ 
+}
+
 
 namespace  { 
 
@@ -14203,6 +14305,8 @@ namespace  {
     class View extends \Illuminate\Support\Facades\View {}
 
     class Module extends \Nwidart\Modules\Facades\Module {}
+
+    class Setting extends \Arcanedev\Settings\Facades\Setting {}
  
 }
 

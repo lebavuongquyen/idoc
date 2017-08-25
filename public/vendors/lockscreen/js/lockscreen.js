@@ -168,7 +168,7 @@ var LockScreen = function($opt) {
     this.options = {
         enable: true,
         timeout: 30000,
-        icon: 'ball',
+        icon: 'ball'
     };
     return this.init($opt);
 };
@@ -275,7 +275,7 @@ LockScreen.prototype.icon = function($icon) {
         return LockScreenIcon[this.options.icon];
     }
     return null;
-}
+};
 
 LockScreen.prototype.setIcon = function($icon) {
     var icon = this.icon($icon);
@@ -284,7 +284,3 @@ LockScreen.prototype.setIcon = function($icon) {
         icon.init();
     }
 };
-var lockScreen;
-$(document).ready(function(){
-    lockScreen = new LockScreen({timeout:3000 , icon : 'bike'});
-});

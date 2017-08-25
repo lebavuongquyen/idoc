@@ -10,16 +10,15 @@ namespace IDoc\Models\Base;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class PasswordReset
+ * Class Setting
  * 
- * @property string $email
- * @property string $token
- * @property \Carbon\Carbon $created_at
+ * @property int $id
+ * @property string $key
+ * @property string $value
  *
  * @package IDoc\Models\Base
  */
-class PasswordReset extends Eloquent
+class Setting extends Eloquent
 {
-	public $incrementing = false;
 	public $timestamps = false;
 }

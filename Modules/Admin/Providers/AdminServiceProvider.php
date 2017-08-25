@@ -76,9 +76,10 @@ class AdminServiceProvider extends ServiceProvider
             $action = app('request')->route()->getAction();
             $controller = class_basename($action['controller']);
             $module = \Module::find('admin');
+            $user = \Auth::user();
             list($controller, $action) = explode('@', $controller);
 
-            $view->with(compact('controller', 'action' , 'module'));
+            $view->with(compact('controller', 'action' , 'module' , 'user'));
         });
     }
 

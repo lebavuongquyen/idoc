@@ -10,20 +10,22 @@ namespace IDoc\Models\Base;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class User
+ * Class UserAvatar
  * 
  * @property int $id
- * @property string $name
- * @property string $email
- * @property string $password
- * @property string $remember_token
+ * @property string $link
+ * @property int $user_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $deleted_at
  *
  * @package IDoc\Models\Base
  */
-class User extends Eloquent
+class UserAvatar extends Eloquent
 {
 	use \Illuminate\Database\Eloquent\SoftDeletes;
+
+	protected $casts = [
+		'user_id' => 'int'
+	];
 }

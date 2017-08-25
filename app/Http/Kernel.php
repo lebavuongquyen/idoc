@@ -18,6 +18,8 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \IDoc\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Arcanedev\Settings\Http\Middleware\SettingsMiddleware::class,
+        \Modules\Admin\Http\Middleware\AccessAdmin::class
     ];
 
     /**
@@ -56,5 +58,6 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \IDoc\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'access_admin' => \Modules\Admin\Http\Middleware\AccessAdmin::class
     ];
 }

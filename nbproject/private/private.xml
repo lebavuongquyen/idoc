@@ -3,20 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/workspace/laravel/idoc/app/Http/Controllers/Auth/ResetPasswordController.php</file>
-            <file>file:/E:/workspace/laravel/idoc/vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php</file>
-            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Resources/views/layouts/global.blade.php</file>
-            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Resources/views/layouts/master.blade.php</file>
-            <file>file:/E:/workspace/laravel/idoc/app/Http/Controllers/Auth/RegisterController.php</file>
-            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Http/routes.php</file>
-            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Resources/views/layouts/top_navigation.blade.php</file>
-            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Resources/views/layouts/meta.blade.php</file>
             <file>file:/E:/workspace/laravel/idoc/app/Http/Middleware/RedirectIfAuthenticated.php</file>
-            <file>file:/E:/workspace/laravel/idoc/public/js/helpers.js</file>
-            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Assets/js/app.js</file>
-            <file>file:/E:/workspace/laravel/idoc/public/js/utilities.js</file>
-            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Http/Controllers/AdminController.php</file>
-            <file>file:/E:/workspace/laravel/idoc/app/Http/Controllers/Auth/LoginController.php</file>
+            <file>file:/E:/workspace/laravel/idoc/app/_ide_helper.php</file>
+            <file>file:/E:/workspace/laravel/idoc/database/seeds/UsersTableSeeder.php</file>
+            <file>file:/E:/workspace/laravel/idoc/database/seeds/UserRolesTableSeeder.php</file>
+            <file>file:/E:/workspace/laravel/idoc/app/Http/Kernel.php</file>
+            <file>file:/E:/workspace/laravel/idoc/database/migrations/2017_08_25_095800_create_user_groups_table.php</file>
+            <file>file:/E:/workspace/laravel/idoc/database/migrations/2014_10_12_000000_create_users_table.php</file>
+            <file>file:/E:/workspace/laravel/idoc/database/migrations/2017_08_25_095815_create_user_roles_table.php</file>
+            <file>file:/E:/workspace/laravel/idoc/database/migrations/2017_08_25_080545_create_user_avatars_table.php</file>
+            <file>file:/E:/workspace/laravel/idoc/database/seeds/UserGroupsTableSeeder.php</file>
+            <file>file:/E:/workspace/laravel/idoc/app/Models/User.php</file>
+            <file>file:/E:/workspace/laravel/idoc/database/seeds/DatabaseSeeder.php</file>
         </group>
     </open-files>
 </project-private>
