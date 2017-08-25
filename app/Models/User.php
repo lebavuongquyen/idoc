@@ -9,6 +9,12 @@ namespace IDoc\Models;
 
 use Reliese\Database\Eloquent\Model as Eloquent;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 /**
  * Class User
@@ -23,9 +29,13 @@ use Illuminate\Notifications\Notifiable;
  *
  * @package App\Models
  */
-class User extends Eloquent
+class User extends Eloquent implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-    use Notifiable;
+
+    use Authenticatable,
+        Authorizable,
+        CanResetPassword,
+        Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -44,4 +54,5 @@ class User extends Eloquent
     protected $hidden = [
         'password', 'remember_token',
     ];
+
 }

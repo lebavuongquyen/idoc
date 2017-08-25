@@ -8,13 +8,18 @@ use Illuminate\Routing\Controller;
 
 class AdminController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
     {
-        return view('admin::index');
+        return view('admin::dashboard.index');
     }
 
     /**

@@ -53,11 +53,13 @@ php artisan clear-compiled
 php artisan ide-helper:generate
 php artisan optimize
 mv './_ide_helper.php' './app/_ide_helper.php'
+php artisan cache:clear
+php artisan view:clear
 composer dump-autoload
 
 log "\nReset the database "
 func_env DB_DATABASE
-php artisan db:create $DB_DATABASE --F
+php artisan db:create $DB_DATABASE -F
 php artisan migrate
 
 log "\nGenerate Models"

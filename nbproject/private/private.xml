@@ -2,6 +2,21 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/E:/workspace/laravel/idoc/app/Http/Controllers/Auth/ResetPasswordController.php</file>
+            <file>file:/E:/workspace/laravel/idoc/vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php</file>
+            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Resources/views/layouts/global.blade.php</file>
+            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Resources/views/layouts/master.blade.php</file>
+            <file>file:/E:/workspace/laravel/idoc/app/Http/Controllers/Auth/RegisterController.php</file>
+            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Http/routes.php</file>
+            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Resources/views/layouts/top_navigation.blade.php</file>
+            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Resources/views/layouts/meta.blade.php</file>
+            <file>file:/E:/workspace/laravel/idoc/app/Http/Middleware/RedirectIfAuthenticated.php</file>
+            <file>file:/E:/workspace/laravel/idoc/public/js/helpers.js</file>
+            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Assets/js/app.js</file>
+            <file>file:/E:/workspace/laravel/idoc/public/js/utilities.js</file>
+            <file>file:/E:/workspace/laravel/idoc/Modules/Admin/Http/Controllers/AdminController.php</file>
+            <file>file:/E:/workspace/laravel/idoc/app/Http/Controllers/Auth/LoginController.php</file>
+        </group>
     </open-files>
 </project-private>

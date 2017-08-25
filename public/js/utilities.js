@@ -1558,7 +1558,6 @@ function arrayMin($arr, $length, $emptyObj) {
 }
 
 window.onbeforeunload = window.onunload = function() {
-    $.fn.showLoading();
     for(var x in AjaxList) {
         AjaxList[x].abort();
     }

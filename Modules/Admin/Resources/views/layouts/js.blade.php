@@ -41,5 +41,7 @@
 <script src="{{qasset('public/vendors')}}/lockscreen/js/lockscreen-icon.js"></script>
 @yield('js_plugin')
 <!-- Custom Theme Scripts -->
+<script src="{{qasset('public/js/helpers.js')}}"></script>
 <script src="{{qasset('public/js/utilities.js')}}"></script>
 <script src="{{module_asset_url('admin')}}/build/js/custom.js"></script>
+<script src="{{module_asset_url('admin')}}/js/app.js"></script>

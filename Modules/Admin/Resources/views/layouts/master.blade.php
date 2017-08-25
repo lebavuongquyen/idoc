@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+
     <head>
         @include('admin::layouts.meta')
 
         <title>@yield('title')</title>
         @include('admin::layouts.css')
-
+        @include('admin::layouts.global')
     </head>
 
     <body class="nav-md">
@@ -31,4 +31,4 @@
     </body>
     @include('admin::layouts.js')
     @yield('script')
-</html>
+
