@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # get dir for output file
 current_dir=$(pwd)
 script_dir=$(dirname $0)
