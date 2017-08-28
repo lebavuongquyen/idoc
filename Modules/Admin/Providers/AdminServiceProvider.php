@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Admin\Providers;
+namespace Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
@@ -70,17 +70,6 @@ class AdminServiceProvider extends ServiceProvider
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/admin';
         }, \Config::get('view.paths')), [$sourcePath]), 'admin');
-        
-        app('view')->composer('admin::layouts.master',
-                              function ($view) {
-            $action = app('request')->route()->getAction();
-            $controller = class_basename($action['controller']);
-            $module = \Module::find('admin');
-            $user = \Auth::user();
-            list($controller, $action) = explode('@', $controller);
-
-            $view->with(compact('controller', 'action' , 'module' , 'user'));
-        });
     }
 
     /**

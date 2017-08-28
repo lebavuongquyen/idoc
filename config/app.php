@@ -232,6 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Module' => Nwidart\Modules\Facades\Module::class,
         'Setting' => Arcanedev\Settings\Facades\Setting::class,
+        'Carbon' => Carbon\Carbon::class,
     ],
 
 ];

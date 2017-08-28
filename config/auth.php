@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => IDoc\Models\User::class,
+            'model' => Admin\Models\User::class,
         ],
 
         // 'users' => [

@@ -21,3 +21,7 @@ function qasset($path){
 //    return secure_asset($path);
     return asset($path);
 }
+
+function brace($str) {
+    return sprintf("[%s]", $str);
+}

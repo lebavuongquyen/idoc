@@ -1,17 +1,10 @@
 <?php
 
 namespace IDoc\Models;
-use Reliese\Database\Eloquent\Model as Eloquent;
+use IDoc\Models\Base\UserAvatar as Eloquent;
 
 /**
  * Class UserAvatar
- * 
- * @property int $id
- * @property string $link
- * @property int $user_id
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property \Carbon\Carbon $deleted_at
  *
  * @package IDoc\Models\Base
  */

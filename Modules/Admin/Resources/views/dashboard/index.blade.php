@@ -1,3 +1,6 @@
+<?php
+//    QDebug::dumpEnd($user->role);
+?>
 @extends('admin::layouts.master')
 @section('title' , 'Idoc Admin Page') 
 @section('content')

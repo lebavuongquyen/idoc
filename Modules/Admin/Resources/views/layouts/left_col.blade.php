@@ -10,7 +10,7 @@
             <img src="{{$user->currentAvatar ? $user->currentAvatar->link : qasset('public/image/no-avatar.png')}}" alt="..." class="img-circle profile_img">
         </div>
         <div class="profile_info">
-            <span>Welcome,</span>
+            <span>Welcome ,</span>
             <h2>{{$user->name}}</h2>
         </div>
     </div>

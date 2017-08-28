@@ -10,15 +10,17 @@ namespace IDoc\Models\Base;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class Setting
+ * Class UserGroup
  * 
  * @property int $id
- * @property string $key
- * @property string $value
+ * @property string $name
+ * @property string $short_name
+ * @property string $deleted_at
  *
  * @package IDoc\Models\Base
  */
-class Setting extends Eloquent
+class UserGroup extends Eloquent
 {
+	use \Illuminate\Database\Eloquent\SoftDeletes;
 	public $timestamps = false;
 }

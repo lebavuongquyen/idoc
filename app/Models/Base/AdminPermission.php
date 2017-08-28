@@ -10,15 +10,17 @@ namespace IDoc\Models\Base;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class Setting
+ * Class AdminPermission
  * 
  * @property int $id
- * @property string $key
- * @property string $value
+ * @property string $name
+ * @property string $group_ids
+ * @property string $role_ids
+ * @property string $user_ids
  *
  * @package IDoc\Models\Base
  */
-class Setting extends Eloquent
+class AdminPermission extends Eloquent
 {
 	public $timestamps = false;
 }

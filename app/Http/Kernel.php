@@ -19,7 +19,7 @@ class Kernel extends HttpKernel
         \IDoc\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Arcanedev\Settings\Http\Middleware\SettingsMiddleware::class,
-        \Modules\Admin\Http\Middleware\AccessAdmin::class
+        \IDoc\Http\Middleware\GlobalViewVariable::class
     ];
 
     /**
@@ -36,6 +36,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \IDoc\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \IDoc\Http\Middleware\GlobalViewVariable::class
         ],
 
         'api' => [
@@ -58,6 +59,8 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \IDoc\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'access_admin' => \Modules\Admin\Http\Middleware\AccessAdmin::class
+        'view_variable' => \IDoc\Http\Middleware\GlobalViewVariable::class,
+        'access_admin' => \Admin\Http\Middleware\AccessAdmin::class,
+        'admin_view_variable' => \Admin\Http\Middleware\AdminViewVariable::class,
     ];
 }

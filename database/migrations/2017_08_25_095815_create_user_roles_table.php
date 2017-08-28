@@ -18,6 +18,7 @@ class CreateUserRolesTable extends Migration
             $table->string('name')->unique();
             $table->string('short_name')->unique();
             $table->string('group_id')->unique();
+            $table->integer('parent_id')->nullable();
             $table->softDeletes();
         });
     }

@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Admin\Http\Middleware;
+namespace Admin\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 
 class AccessAdmin
 {
+
     /**
      * Handle an incoming request.
      *
@@ -15,13 +15,29 @@ class AccessAdmin
      * @param  \Closure  $next
      * @return mixed
      */
-    
-    public function __construct(){
+    public function __construct()
+    {
+        
     }
-     
+
     public function handle(Request $request, Closure $next)
     {
-        \QDebug::dumpEnd(Route::class);
+        if (!$this->isAllowed()) {
+            \Auth::logout();
+            return redirect('login')->withErrors(['email' => 'You are not allowed to access this section.']);
+        }
         return $next($request);
     }
+
+    protected function getRouteName()
+    {
+        return \Route::current()->getName();
+    }
+
+    protected function isAllowed()
+    {
+        $user = \Auth::user();
+        return $user && $user->isAllowed($this->getRouteName());
+    }
+
 }

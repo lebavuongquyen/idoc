@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.35 on 2017-08-26.
+ * Generated for Laravel 5.4.35 on 2017-08-28.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1581,7 +1581,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the currently authenticated user.
          *
-         * @return \IDoc\Models\User|null 
+         * @return \Admin\Models\User|null 
          * @static 
          */ 
         public static function user()
@@ -1616,7 +1616,7 @@ namespace Illuminate\Support\Facades {
          * Log the given user ID into the application without sessions or cookies.
          *
          * @param mixed $id
-         * @return \IDoc\Models\User|false 
+         * @return \Admin\Models\User|false 
          * @static 
          */ 
         public static function onceUsingId($id)
@@ -1680,7 +1680,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param mixed $id
          * @param bool $remember
-         * @return \IDoc\Models\User|false 
+         * @return \Admin\Models\User|false 
          * @static 
          */ 
         public static function loginUsingId($id, $remember = false)
@@ -1727,7 +1727,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \IDoc\Models\User 
+         * @return \Admin\Models\User 
          * @static 
          */ 
         public static function getLastAttempted()
@@ -1852,7 +1852,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Return the currently cached user.
          *
-         * @return \IDoc\Models\User|null 
+         * @return \Admin\Models\User|null 
          * @static 
          */ 
         public static function getUser()
@@ -1898,7 +1898,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if the current user is authenticated.
          *
-         * @return \IDoc\Models\User 
+         * @return \Admin\Models\User 
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */ 

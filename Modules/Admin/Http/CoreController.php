@@ -1,5 +1,5 @@
 <?php
-namespace Modules\Admin\Http;
+namespace Admin\Http;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -17,10 +17,6 @@ use IDoc\Http\Controllers\Controller;
  */
 class CoreController  extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      * @return Response
@@ -82,4 +78,5 @@ class CoreController  extends Controller
     public function destroy()
     {
     }
+    
 }
