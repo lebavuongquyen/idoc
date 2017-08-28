@@ -56,17 +56,17 @@ class QDebug {
     
     public static function dumpEnd($data = null , $toJSon = false) {
         self::dump($data, $toJSon);
-        Yii::app()->end();
+        die;
     }
     
     public static function exportEnd($data = null , $toJSon = false) {
         self::export($data, $toJSon);
-        Yii::app()->end();
+        die;
     }
     
     public static function outEnd($data = null , $toJSon = false) {
         self::out($data, $toJSon);
-        Yii::app()->end();
+        die;
     }
     
     public static function jsLog ($data = null) {

@@ -4,7 +4,6 @@ namespace Modules\Admin\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 
 class AccessAdmin
 {
@@ -15,13 +14,9 @@ class AccessAdmin
      * @param  \Closure  $next
      * @return mixed
      */
-    
-    public function __construct(){
-    }
-     
     public function handle(Request $request, Closure $next)
     {
-        \QDebug::dumpEnd(Route::class);
+//        var_dump($request);die;
         return $next($request);
     }
 }
