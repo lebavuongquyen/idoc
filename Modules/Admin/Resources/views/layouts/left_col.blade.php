@@ -123,13 +123,13 @@
         <a data-toggle="tooltip" data-placement="top" title="Settings">
             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
         </a>
-        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+        <a data-toggle="tooltip" data-placement="top" title="FullScreen" href="javascript:void(0);" onclick="app.toggleFull();">
             <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
         </a>
-        <a data-toggle="tooltip" data-placement="top" title="Lock">
+        <a data-toggle="tooltip" data-placement="top" title="Lock" href="javascript:void(0);" onclick="app.lockscreen.lock();">
             <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
         </a>
-        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+        <a data-toggle="tooltip" data-placement="top" title="Logout" href="javascript:void(0);" onclick="app.logout();">
             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
         </a>
     </div>

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class AccessAdmin
 {
+    protected $main = 'admin/dashboard';
+
 
     /**
      * Handle an incoming request.
@@ -23,8 +25,13 @@ class AccessAdmin
     public function handle(Request $request, Closure $next)
     {
         if (!$this->isAllowed()) {
-            \Auth::logout();
-            return redirect('login')->withErrors(['email' => 'You are not allowed to access this section.']);
+            if($this->main === $this->getRouteName()) {
+                \Auth::logout();
+                return redirect('login')->withErrors(['email' => 'You are not allowed to access this section.']);
+            }
+            else {
+                abort(403, 'Use are not allowed to access this page.');
+            }
         }
         return $next($request);
     }

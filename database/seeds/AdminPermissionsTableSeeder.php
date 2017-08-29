@@ -12,7 +12,7 @@ class AdminPermissionsTableSeeder extends Seeder
     public function run()
     {
         DB::table('admin_permissions')->insert([
-            'name' => 'dashboard',
+            'name' => 'admin/dashboard',
             'group_ids'=>'[1]',
         ]);
     }

@@ -17,4 +17,5 @@
 
 <!-- Custom Theme Style -->
 <link href="{{module_asset_url('admin')}}/build/css/custom.min.css" rel="stylesheet">
+<link href="{{module_asset_url('admin')}}/css/app.css" rel="stylesheet">
 

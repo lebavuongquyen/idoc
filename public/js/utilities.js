@@ -366,7 +366,7 @@ var Util = {
         return moment($end).diff($start);
     },
     dateDiffHumanize: function($start, $end, $refix) {
-        return moment.duration(Util.dateDiff($start, $end)).humanize($refix);
+        return moment.duration(Util.dateDiff($start, $end)).fromNow($refix);
     },
     dateDiffConvert: function($start, $end, $type) {
         var _duration = Util.dateDiff($start, $end);
@@ -512,6 +512,51 @@ var Util = {
         // At last, if the user has denied notifications, and you 
         // want to be respectful there is no need to bother them any more.
         return notification;
+    },
+    requestFullScreen: function(el) {
+        if(typeof el === 'undefined') {
+            el = document.documentElement;
+        }
+        // Supports most browsers and their versions.
+        var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+
+        if(requestMethod) { // Native full screen.
+            requestMethod.call(el);
+        }
+        else if(typeof window.ActiveXObject !== "undefined") { // Older IE.
+            var wscript = new ActiveXObject("WScript.Shell");
+            if(wscript !== null) {
+                wscript.SendKeys("{F11}");
+            }
+        }
+        return false;
+    },
+    cancelFullScreen: function(el) {
+        if(typeof el === 'undefined') {
+            el = document.documentElement;
+        }
+        var requestMethod = el.cancelFullScreen || el.webkitCancelFullScreen || el.mozCancelFullScreen || el.exitFullscreen;
+        if(requestMethod) { // cancel full screen.
+            requestMethod.call(el);
+        }
+        else if(typeof window.ActiveXObject !== "undefined") { // Older IE.
+            var wscript = new ActiveXObject("WScript.Shell");
+            if(wscript !== null) {
+                wscript.SendKeys("{F11}");
+            }
+        }
+    },
+    toggleFullScreen: function() {
+        var elem = document.documentElement; // Make the body go full screen.
+        var isInFullScreen = (document.fullScreenElement && document.fullScreenElement !== null) || (document.mozFullScreen || document.webkitIsFullScreen);
+
+        if(isInFullScreen) {
+            this.cancelFullScreen(document);
+        }
+        else {
+            this.requestFullScreen(elem);
+        }
+        return false;
     }
 };
 var Widget = {
@@ -885,7 +930,26 @@ var SS = {
         }
         return true;
     }
+
 };
+
+
+function requestFullScreen(el) {
+    // Supports most browsers and their versions.
+    var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+
+    if(requestMethod) { // Native full screen.
+        requestMethod.call(el);
+    }
+    else if(typeof window.ActiveXObject !== "undefined") { // Older IE.
+        var wscript = new ActiveXObject("WScript.Shell");
+        if(wscript !== null) {
+            wscript.SendKeys("{F11}");
+        }
+    }
+    return false
+}
+
 var App = {
     baseUrl: function($url) {
         if($url) {
@@ -1441,7 +1505,6 @@ if(! Object.keys) {
     }());
 }
 
-
 function htmlDecode(value) {
     return $("<textarea/>").html(value).text();
 }
@@ -1503,8 +1566,8 @@ String.prototype.capitalize = function(all) {
 
 String.prototype.format = function(col) {
     var _col = typeof col === 'object' ? col : arguments;
-    return this.replace(/\{\{(\w+)\}\}|\{(\w+)\}/g, function(c , m, n ) {
-        var _data = typeof _col[m || n] === 'function'? _col[m || n]() : _col[m || n];
+    return this.replace(/\{\{(\w+)\}\}|\{(\w+)\}/g, function(c, m, n) {
+        var _data = typeof _col[m || n] === 'function' ? _col[m || n]() : _col[m || n];
         return m ? _data.encode() : _data;
     });
 };

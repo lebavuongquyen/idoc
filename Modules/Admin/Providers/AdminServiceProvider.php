@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factory;
 
 class AdminServiceProvider extends ServiceProvider
 {
+
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -25,6 +26,11 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->registerFactories();
+        \App::singleton(
+            \Illuminate\Contracts\Debug\ExceptionHandler::class, 
+            \Admin\Exceptions\Handler::class,
+            true
+        );
     }
 
     /**
@@ -45,10 +51,10 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('admin.php'),
-        ], 'config');
+            __DIR__ . '/../Config/config.php' => config_path('admin.php'),
+            ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'admin'
+            __DIR__ . '/../Config/config.php', 'admin'
         );
     }
 
@@ -61,15 +67,15 @@ class AdminServiceProvider extends ServiceProvider
     {
         $viewPath = resource_path('views/modules/admin');
 
-        $sourcePath = __DIR__.'/../Resources/views';
+        $sourcePath = __DIR__ . '/../Resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
         ]);
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/admin';
-        }, \Config::get('view.paths')), [$sourcePath]), 'admin');
+                    return $path . '/modules/admin';
+                }, \Config::get('view.paths')), [$sourcePath]), 'admin');
     }
 
     /**
@@ -83,8 +89,9 @@ class AdminServiceProvider extends ServiceProvider
 
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, 'admin');
-        } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'admin');
+        }
+        else {
+            $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'admin');
         }
     }
 
@@ -94,7 +101,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (! app()->environment('production')) {
+        if (!app()->environment('production')) {
             app(Factory::class)->load(__DIR__ . '/Database/factories');
         }
     }
@@ -108,4 +115,5 @@ class AdminServiceProvider extends ServiceProvider
     {
         return [];
     }
+
 }

@@ -122,4 +122,11 @@ class User extends \IDoc\Models\Base\User implements AuthenticatableContract, Au
         return $this->_permissions;
     }
     
+    public function messages(){
+        return $this->hasMany(UserMessage::class,'user_id')->orderBy('id' , 'desc');
+    }
+    
+    public function lastestMessages(){
+        return $this->hasMany(UserMessage::class,'user_id')->limit(6)->orderBy('id' , 'desc');
+    }
 }

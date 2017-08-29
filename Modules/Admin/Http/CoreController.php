@@ -17,6 +17,13 @@ use IDoc\Http\Controllers\Controller;
  */
 class CoreController  extends Controller
 {
+    protected $result = [
+        'status' => 200,
+        'data'   => [],
+        'message'=> 'Success',
+        'errors' => [],
+        'total' => 0
+    ];
     /**
      * Display a listing of the resource.
      * @return Response

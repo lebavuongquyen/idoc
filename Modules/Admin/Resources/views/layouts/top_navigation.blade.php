@@ -13,11 +13,10 @@
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li><a href="javascript:;"> Profile</a></li>
                         <li>
-                            <a href="javascript:;">
+                            <a href="{{route('admin/user_profile')}}">
                                 <span class="badge bg-red pull-right">50%</span>
-                                <span>Settings</span>
+                                <span>Profile</span>
                             </a>
                         </li>
                         <li><a href="javascript:;">Help</a></li>
@@ -25,60 +24,12 @@
                     </ul>
                 </li>
 
-                <li role="presentation" class="dropdown">
+                <li role="presentation" class="dropdown" id="user_message">
                     <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-envelope-o"></i>
-                        <span class="badge bg-green">6</span>
+                        <span class="badge bg-green user-message-total" style="display: none;">6</span>
                     </a>
-                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                        <li>
-                            <a>
-                                <span class="image"><img src="{{module_asset('admin','images/img.jpg')}}" alt="Profile Image" /></span>
-                                <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <span class="image"><img src="{{module_asset('admin','images/img.jpg')}}" alt="Profile Image" /></span>
-                                <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <span class="image"><img src="{{module_asset('admin','images/img.jpg')}}" alt="Profile Image" /></span>
-                                <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <span class="image"><img src="{{module_asset('admin','images/img.jpg')}}" alt="Profile Image" /></span>
-                                <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                            </a>
-                        </li>
+                    <ul  class="dropdown-menu list-unstyled msg_list" role="menu">
                         <li>
                             <div class="text-center">
                                 <a>
