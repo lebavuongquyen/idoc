@@ -168,8 +168,10 @@ var LockScreen = function($opt) {
     this.options = {
         enable: true,
         timeout: 30000,
-        icon: 'ball'
+        icon: 'ball',
+        message:''
     };
+    this.locking = false;
     return this.init($opt);
 };
 
@@ -221,12 +223,28 @@ LockScreen.prototype.setWatcher = function() {
     }
 };
 
+LockScreen.prototype.setClassBody = function() {
+    if(this.locking) {
+        $('body').addClass('lock');
+    }
+    else {
+        $('body').removeClass('lock');
+    }
+};
+
 LockScreen.prototype.lock = function() {
+    if (this.locking) {
+        return;
+    }
     if(typeof this.options.beforeLock === 'function') {
         this.options.beforeLock();
     }
     $('body').append(this.screen());
+    this.locking = true;
     this.setIcon();
+    this.setMessage();
+    this.setClassBody();
+    Timeout.clear('LOCKSCREEN');
     if(typeof this.options.afterLock === 'function') {
         this.options.afterLock();
     }
@@ -237,6 +255,8 @@ LockScreen.prototype.unlock = function() {
         this.options.beforeUnlock();
     }
     $('.lock-screen-wrapper').remove();
+    this.locking = false;
+    this.setClassBody();
     if(typeof this.options.afterUnlock === 'function') {
         this.options.afterUnlock();
     }
@@ -261,6 +281,7 @@ LockScreen.prototype.screen = function() {
         + '         <div class="lock-screen-overlay"></div>'
         + '         <div class="lock-screen-icon"></div>'
         + '         <div class="lock-screen-form"></div>'
+        + '         <div class="lock-screen-message"></div>'
         + '      </div>';
 };
 
@@ -282,5 +303,32 @@ LockScreen.prototype.setIcon = function($icon) {
     if(icon) {
         $('.lock-screen-icon').html(icon.html());
         icon.init();
+    }
+};
+
+LockScreen.prototype.message = function($msg){
+    this.options.message = $msg;
+    this.setMessage();
+};
+
+LockScreen.prototype.setMessage = function(){
+    var _ele = $('.lock-screen-message');
+    var _msg = typeof this.options.message === 'function' ? this.options.message() : this.options.message;
+    switch(typeof _msg) {
+        case 'string':
+            _ele.html(_msg);
+            break;
+        case 'object':
+            _ele.html(_msg.content);
+            if(_msg.class) {
+                _ele.addClass(_msg.class);
+            }
+            if(_msg.style) {
+                _ele.attr('style' , _msg.style);
+            }
+            break;    
+        default:
+            _ele.html('');
+            break;
     }
 };

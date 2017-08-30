@@ -55,6 +55,9 @@ php artisan optimize
 mv './_ide_helper.php' './app/_ide_helper.php'
 php artisan cache:clear
 php artisan view:clear
+php artisan route:clear
+php artisan config:clear   
+php artisan vendor:publish
 composer dump-autoload
 
 log "\nReset the database "

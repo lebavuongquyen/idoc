@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-
     <head>
         @include('admin::layouts.meta')
-
         <title>@yield('title')</title>
         @include('admin::layouts.css')
         @include('admin::layouts.global')
@@ -31,4 +29,5 @@
     </body>
     @include('admin::layouts.js')
     @yield('script')
+    @yield('style')
 

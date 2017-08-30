@@ -1,21 +1,24 @@
 <!-- Bootstrap -->
-<link href="{{qasset('public/vendors')}}/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+{!!qcss('public/vendors/bootstrap/dist/css/bootstrap.min.css')!!}
 <!-- Font Awesome -->
-<link href="{{qasset('public/vendors')}}/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+{!!qcss('public/vendors/font-awesome/css/font-awesome.min.css')!!}
 <!-- NProgress -->
-<link href="{{qasset('public/vendors')}}/nprogress/nprogress.css" rel="stylesheet">
+{!!qcss('public/vendors/nprogress/nprogress.css')!!}
 <!-- iCheck -->
-<link href="{{qasset('public/vendors')}}/iCheck/skins/flat/green.css" rel="stylesheet">
+{!!qcss('public/vendors/iCheck/skins/flat/green.css')!!}
 
 <!-- bootstrap-progressbar -->
-<link href="{{qasset('public/vendors')}}/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+{!!qcss('public/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css')!!}
 <!-- JQVMap -->
-<link href="{{qasset('public/vendors')}}/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-<!-- bootstrap-daterangepicker -->
-<link href="{{qasset('public/vendors')}}/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-<link href="{{qasset('public/vendors')}}/lockscreen/css/lockscreen.css" rel="stylesheet">
+{!!qcss('public/vendors/jqvmap/dist/jqvmap.min.css')!!}
+ <!--bootstrap-daterangepicker--> 
+{!!qcss('public/vendors/bootstrap-daterangepicker/daterangepicker.css')!!}  
+{!!qcss('public/vendors/lockscreen/css/lockscreen.css')!!}
+
+<!-- css for pages -->
+@yield('css_plugin')
 
 <!-- Custom Theme Style -->
-<link href="{{module_asset_url('admin')}}/build/css/custom.min.css" rel="stylesheet">
-<link href="{{module_asset_url('admin')}}/css/app.css" rel="stylesheet">
+{!!qcss(module_asset_url('admin').'/build/css/custom.min.css')!!}
+{!!qcss(module_asset_url('admin').'/css/app.css')!!}
 

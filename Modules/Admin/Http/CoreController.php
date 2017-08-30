@@ -1,9 +1,11 @@
 <?php
+
 namespace Admin\Http;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use IDoc\Http\Controllers\Controller;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,15 +17,32 @@ use IDoc\Http\Controllers\Controller;
  *
  * @author TDM01
  */
-class CoreController  extends Controller
+class CoreController extends Controller
 {
+
     protected $result = [
-        'status' => 200,
-        'data'   => [],
-        'message'=> 'Success',
-        'errors' => [],
-        'total' => 0
+        'status'  => 200,
+        'data'    => [],
+        'message' => 'Success',
+        'errors'  => [],
+        'total'   => 0
     ];
+    public $controller;
+    public $action;
+    public $name;
+
+    public function __construct()
+    {
+        $this->setController();
+    }
+
+    protected function setController()
+    {
+        list($this->controller, $this->action) = explode('@', \Route::current()->getActionName());
+        $this->controller = preg_replace('/.*\\\/', '', $this->controller);
+        $this->name       = strtolower(str_replace('Controller', '', $this->controller));
+    }
+
     /**
      * Display a listing of the resource.
      * @return Response
@@ -49,6 +68,7 @@ class CoreController  extends Controller
      */
     public function store(Request $request)
     {
+        
     }
 
     /**
@@ -76,6 +96,7 @@ class CoreController  extends Controller
      */
     public function update(Request $request)
     {
+        
     }
 
     /**
@@ -84,6 +105,20 @@ class CoreController  extends Controller
      */
     public function destroy()
     {
+        
     }
-    
+
+    /**
+     * Get the evaluated view contents for current route.
+     * 
+     * @param array $data
+     * @param array $mergeData
+     * @return \Illuminate\View\View | \Illuminate\Contracts\View\Factory
+     */
+    public function render($data = [], $mergeData = [])
+    {
+        $view = "admin::{$this->name}.{$this->action}";
+        return view($view, $data, $mergeData);
+    }
+
 }

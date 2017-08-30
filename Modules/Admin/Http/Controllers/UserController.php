@@ -9,7 +9,7 @@ class UserController extends Controller
 
     public function profile(\Request $request)
     {
-        return view('admin::user.index');
+        return $this->render()->with('page' , 'hello');
     }
 
 }

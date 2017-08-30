@@ -8,7 +8,9 @@
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
             <word>admin</word>
             <word>css</word>
+            <word>dist</word>
             <word>QD</word>
+            <word>switchery</word>
         </spellchecker-wordlist>
     </configuration>
 </project>

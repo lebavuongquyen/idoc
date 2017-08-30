@@ -1,47 +1,50 @@
 <!-- jQuery -->
-<script src="{{qasset('public/vendors')}}/jquery/dist/jquery.min.js"></script>
+{!!qjs('public/vendors/jquery/dist/jquery.min.js')!!}
 <!-- Bootstrap -->
-<script src="{{qasset('public/vendors')}}/bootstrap/dist/js/bootstrap.min.js"></script>
+{!!qjs('public/vendors/bootstrap/dist/js/bootstrap.min.js')!!}
 <!-- FastClick -->
-<script src="{{qasset('public/vendors')}}/fastclick/lib/fastclick.js"></script>
+{!!qjs('public/vendors/fastclick/lib/fastclick.js')!!}
 <!-- NProgress -->
-<script src="{{qasset('public/vendors')}}/nprogress/nprogress.js"></script>
+{!!qjs('public/vendors/nprogress/nprogress.js')!!}
 <!-- Chart.js -->
-<script src="{{qasset('public/vendors')}}/Chart.js/dist/Chart.min.js"></script>
+{!!qjs('public/vendors/Chart.js/dist/Chart.min.js')!!}
 <!-- gauge.js -->
-<script src="{{qasset('public/vendors')}}/gauge.js/dist/gauge.min.js"></script>
+{!!qjs('public/vendors/gauge.js/dist/gauge.min.js')!!}
 <!-- bootstrap-progressbar -->
-<script src="{{qasset('public/vendors')}}/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+{!!qjs('public/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js')!!}
 <!-- iCheck -->
-<script src="{{qasset('public/vendors')}}/iCheck/icheck.min.js"></script>
+{!!qjs('public/vendors/iCheck/icheck.min.js')!!}
 <!-- Skycons -->
-<script src="{{qasset('public/vendors')}}/skycons/skycons.js"></script>
+{!!qjs('public/vendors/skycons/skycons.js')!!}
 <!-- Flot -->
-<script src="{{qasset('public/vendors')}}/Flot/jquery.flot.js"></script>
-<script src="{{qasset('public/vendors')}}/Flot/jquery.flot.pie.js"></script>
-<script src="{{qasset('public/vendors')}}/Flot/jquery.flot.time.js"></script>
-<script src="{{qasset('public/vendors')}}/Flot/jquery.flot.stack.js"></script>
-<script src="{{qasset('public/vendors')}}/Flot/jquery.flot.resize.js"></script>
+{!!qjs('public/vendors/Flot/jquery.flot.js')!!}
+{!!qjs('public/vendors/Flot/jquery.flot.pie.js')!!}
+{!!qjs('public/vendors/Flot/jquery.flot.time.js')!!}
+{!!qjs('public/vendors/Flot/jquery.flot.stack.js')!!}
+{!!qjs('public/vendors/Flot/jquery.flot.resize.js')!!}
 <!-- Flot plugins -->
-<script src="{{qasset('public/vendors')}}/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-<script src="{{qasset('public/vendors')}}/flot-spline/js/jquery.flot.spline.min.js"></script>
-<script src="{{qasset('public/vendors')}}/flot.curvedlines/curvedLines.js"></script>
+{!!qjs('public/vendors/flot.orderbars/js/jquery.flot.orderBars.js')!!}
+{!!qjs('public/vendors/flot-spline/js/jquery.flot.spline.min.js')!!}
+{!!qjs('public/vendors/flot.curvedlines/curvedLines.js')!!}
 <!-- DateJS -->
-<script src="{{qasset('public/vendors')}}/DateJS/build/date.js"></script>
+{!!qjs('public/vendors/DateJS/build/date.js')!!}
 <!-- JQVMap -->
-<script src="{{qasset('public/vendors')}}/jqvmap/dist/jquery.vmap.js"></script>
-<script src="{{qasset('public/vendors')}}/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-<script src="{{qasset('public/vendors')}}/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+{!!qjs('public/vendors/jqvmap/dist/jquery.vmap.js')!!}
+{!!qjs('public/vendors/jqvmap/dist/maps/jquery.vmap.world.js')!!}
+{!!qjs('public/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js')!!}
 <!-- bootstrap-daterangepicker -->
-<script src="{{qasset('public/vendors')}}/moment/min/moment.min.js"></script>
-<script src="{{qasset('public/vendors')}}/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="{{qasset('public/vendors')}}/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="{{qasset('public/vendors')}}/jquery-validation/dist/additional-methods.js"></script>
-<script src="{{qasset('public/vendors')}}/lockscreen/js/lockscreen.js"></script>
-<script src="{{qasset('public/vendors')}}/lockscreen/js/lockscreen-icon.js"></script>
+{!!qjs('public/vendors/moment/min/moment.min.js')!!}
+{!!qjs('public/vendors/bootstrap-daterangepicker/daterangepicker.js')!!}
+{!!qjs('public/vendors/jquery-validation/dist/jquery.validate.min.js')!!}
+{!!qjs('public/vendors/jquery-validation/dist/additional-methods.js')!!}
+{!!qjs('public/vendors/lockscreen/js/lockscreen.js')!!}
+{!!qjs('public/vendors/lockscreen/js/lockscreen-icon.js')!!}
+
+<!-- js for pages -->
 @yield('js_plugin')
+
 <!-- Custom Theme Scripts -->
-<script src="{{qasset('public/js/helpers.js')}}"></script>
-<script src="{{qasset('public/js/utilities.js')}}"></script>
-<script src="{{module_asset_url('admin')}}/build/js/custom.js"></script>
-<script src="{{module_asset_url('admin')}}/js/app.js"></script>
+{!!qjs('public/js/helpers.js')!!}
+{!!qjs('public/js/utilities.js')!!}
+{!!qjs(module_asset_url('admin').'/build/js/custom.min.js')!!}
+{!!qjs(module_asset_url('admin').'/js/app.js')!!}

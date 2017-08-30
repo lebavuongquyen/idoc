@@ -8,6 +8,10 @@ and open the template in the editor.
     Author     : TDM01
 */
 
+body.lock {
+    overflow: hidden !important;
+}
+
 .lock-screen-wrapper {
     position: fixed;
     top:0px;
@@ -17,7 +21,7 @@ and open the template in the editor.
     z-index: 8000;
 }
 
-.lock-screen-wrapper>div {
+.lock-screen-wrapper>div:not(.lock-screen-message) {
     position: fixed;
     top:0px;
     left:0px;
@@ -26,7 +30,6 @@ and open the template in the editor.
 }
 
 .lock-screen-overlay {
-    background: #000;
     z-index: 1;
     background: #000;
     opacity: 0.8;
@@ -44,4 +47,47 @@ and open the template in the editor.
     align-items: center;
     justify-content: center;
     z-index:3;
+}
+
+.lock-screen-message {
+    z-index: 5;
+    padding:5px;
+    position: absolute;
+    text-align: center;
+    display: inline-block;
+    font-size:20px;
+    font-weight: bold;
+    color:#fff;
+    margin:30px;
+    font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+}
+
+.lock-screen-message.top {
+    top:0px;
+}
+
+.lock-screen-message.bottom {
+    bottom:0px;
+}
+
+.lock-screen-message.left {
+    left:0px;
+}
+
+.lock-screen-message.right {
+    right:0px;
+}
+
+.lock-screen-message.middle {
+    top:50%;
+    transform: translateY(-50%);
+    margin-top:0px;
+    margin-bottom: 0px;
+}
+
+.lock-screen-message.center {
+    left:50%;
+    transform: translateX(-50%);
+    margin-left:0px;
+    margin-right:0px;
 }
