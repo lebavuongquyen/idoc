@@ -24,7 +24,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  *
  * @package IDoc\Models\Base
  */
-class UserInfo extends Eloquent
+class UserProfile extends Eloquent
 {
 	protected $table = 'user_infoes';
 	public $timestamps = false;
