@@ -17,7 +17,12 @@ class GlobalViewVariable
     public function handle($request, Closure $next)
     {
         \View::composer('*', function($view) use ($request){
-            list($controller, $action) = explode('@', $request->route()->getActionName());
+            if ($request->route()->getActionName() !== 'Closure') {
+                list($controller, $action) = explode('@', $request->route()->getActionName());
+            }
+            else {
+                $controller  = $action = null;
+            }
             /* Remove name space from controller */
 //            $controller = preg_replace('/.*\\\/', '', $controller);
 

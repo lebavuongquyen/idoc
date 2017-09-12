@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Models;
+namespace IDoc\Models;
 
 class UserGroup extends \IDoc\Models\Base\UserGroup
 {

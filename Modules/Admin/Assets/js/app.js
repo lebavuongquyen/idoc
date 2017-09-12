@@ -119,11 +119,11 @@ var app = new Admin();
     /**
      * Lockscreen
      */
-    app.lockscreen = new LockScreen({
-        timeout:30000,
-        message:{
-            content: 'Boss is out for lunch',
-            class:'top center'
-        }
-    });
+//    app.lockscreen = new LockScreen({
+//        timeout:30000,
+//        message:{
+//            content: 'Boss is out for lunch',
+//            class:'top center'
+//        }
+//    });
 })();

@@ -11,3 +11,7 @@ and open the template in the editor.
 ul.msg_list li.read {
     background: #fff;
 }
+
+.user-profile-icon {
+    width: 20px;
+}

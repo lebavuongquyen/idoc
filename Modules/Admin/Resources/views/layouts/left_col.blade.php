@@ -7,7 +7,7 @@
     <!-- menu profile quick info -->
     <div class="profile clearfix">
         <div class="profile_pic">
-            <img src="{{$user->currentAvatar ? $user->currentAvatar->link : qasset('public/image/no-avatar.png')}}" alt="..." class="img-circle profile_img">
+            <img src="{{$user->avatar_link}}" alt="..." class="img-circle profile_img">
         </div>
         <div class="profile_info">
             <span>Welcome ,</span>

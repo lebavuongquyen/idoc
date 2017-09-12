@@ -30,6 +30,7 @@ class CoreController extends Controller
     public $controller;
     public $action;
     public $name;
+    public $page;
 
     public function __construct()
     {
@@ -118,7 +119,7 @@ class CoreController extends Controller
     public function render($data = [], $mergeData = [])
     {
         $view = "admin::{$this->name}.{$this->action}";
-        return view($view, $data, $mergeData);
+        return view($view, $data, $mergeData)->with('page' , $this->page);
     }
 
 }

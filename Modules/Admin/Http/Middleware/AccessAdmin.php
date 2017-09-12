@@ -43,6 +43,9 @@ class AccessAdmin
 
     protected function isAllowed()
     {
+        if ($this->getRouteName() === 'Closure') {
+            return true;
+        }
         $user = \Auth::user();
         return $user && $user->isAllowed($this->getRouteName());
     }

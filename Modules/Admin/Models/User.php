@@ -23,11 +23,12 @@ class User extends \IDoc\Models\Base\User implements AuthenticatableContract, Au
 
     use \Znck\Eloquent\Traits\BelongsToThrough;
     use \Illuminate\Database\Eloquent\SoftDeletes;
+    use \IDoc\Models\Attributes\User;
     use Authenticatable,
         Authorizable,
         CanResetPassword,
         Notifiable;
-
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -52,47 +53,6 @@ class User extends \IDoc\Models\Base\User implements AuthenticatableContract, Au
      * @var array
      */
     protected $dates = ['approval_date', 'created_at', 'updated_at', 'deleted_at'];
-
-    /**
-     * List route user can access
-     * @return string[]
-     */
-    private $_permissions;
-
-    /**
-     * List messages of user
-     * @return string[]
-     */
-    private $_messages;
-
-    public function avatars()
-    {
-        return $this->hasMany(\IDoc\Models\UserAvatar::class, 'user_id')->orderBy('id', 'desc');
-    }
-
-    public function currentAvatar()
-    {
-        return $this->hasOne(\IDoc\Models\UserAvatar::class, 'user_id')->orderBy('id', 'desc');
-    }
-
-    public function role()
-    {
-        return $this->belongsTo(UserRole::class, 'role_id');
-    }
-
-    public function group()
-    {
-        return $this->belongsToThrough(UserGroup::class, UserRole::class, 'id', null,
-                                       [
-                UserGroup::class => 'group_id',
-                UserRole::class  => 'role_id'
-        ]);
-    }
-
-    public function pr()
-    {
-        return $this->belongsTo(self::class, 'parent_id');
-    }
 
     /**
      * 
@@ -122,11 +82,4 @@ class User extends \IDoc\Models\Base\User implements AuthenticatableContract, Au
         return $this->_permissions;
     }
     
-    public function messages(){
-        return $this->hasMany(UserMessage::class,'user_id')->orderBy('id' , 'desc');
-    }
-    
-    public function lastestMessages(){
-        return $this->hasMany(UserMessage::class,'user_id')->limit(6)->orderBy('id' , 'desc');
-    }
 }

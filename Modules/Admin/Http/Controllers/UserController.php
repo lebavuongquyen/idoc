@@ -9,7 +9,8 @@ class UserController extends Controller
 
     public function profile(\Request $request)
     {
-        return $this->render()->with('page' , 'hello');
+        $this->page = 'Profile';
+        return $this->render();
     }
 
 }

@@ -38,3 +38,25 @@ function qjs($path)
 {
     return '<script src="' . qasset($path) . '"></script>';
 }
+
+if(!function_exists('valueOf')) {
+    /**
+     * Get value of key in object , array. Return $default if not found
+     * @param mixed $haystack
+     * @param mixed $needle
+     * @param mixed $default
+     * @return mixed
+     */
+    function valueOf($haystack , $needle  , $default = null) {
+        if(empty($haystack)) {
+            return $default;
+        }
+        if(is_object($haystack)) {
+            return isset($haystack->$needle) ? $haystack->$needle : $default;
+        }
+        if(is_array($haystack)) {
+            return isset($haystack[$needle]) ? $haystack[$needle] : $default;
+        }
+        return value($haystack);
+    }
+}

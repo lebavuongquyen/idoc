@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Models;
+namespace IDoc\Models;
 
 class UserRole extends \IDoc\Models\Base\UserRole
 {
