@@ -86,7 +86,6 @@ var prettyPrintOne;
  */
 var prettyPrint;
 
-
 (function () {
   var win = window;
   // Keyword lists for various languages.

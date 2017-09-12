@@ -74,49 +74,49 @@ trait User
         return valueOf($this->currentAvatar, 'link', qasset('public/image/no-avatar.png'));
     }
 
-    public function info()
+    public function profile()
     {
-        return $this->hasOne(\IDoc\Models\Base\UserInfo::class, 'user_id');
+        return $this->hasOne(\IDoc\Models\UserProfile::class, 'user_id');
     }
 
     public function getAddressAttribute()
     {
-        return valueOf($this->info, 'address');
+        return valueOf($this->profile, 'address');
     }
 
     public function getBirthdayAttribute()
     {
-        return valueOf($this->info, 'birthday');
+        return valueOf($this->profile, 'birthday');
     }
 
     public function getSchoolAttribute()
     {
-        return valueOf($this->info, 'school');
+        return valueOf($this->profile, 'school');
     }
 
     public function getPhoneAttribute()
     {
-        return valueOf($this->info, 'phone');
+        return valueOf($this->profile, 'phone');
     }
 
     public function getHometownAttribute()
     {
-        return valueOf($this->info, 'hometown');
+        return valueOf($this->profile, 'hometown');
     }
 
     public function getAboutAttribute()
     {
-        return valueOf($this->info, 'about');
+        return valueOf($this->profile, 'about');
     }
 
     public function getReligiousAttribute()
     {
-        return valueOf($this->info, 'religious');
+        return valueOf($this->profile, 'religious');
     }
 
     public function getGenderAttribute()
     {
-        return valueOf($this->info, 'gender');
+        return valueOf($this->profile, 'gender');
     }
 
 }

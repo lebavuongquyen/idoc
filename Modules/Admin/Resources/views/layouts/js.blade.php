@@ -46,5 +46,5 @@
 <!-- Custom Theme Scripts -->
 {!!qjs('public/js/helpers.js')!!}
 {!!qjs('public/js/utilities.js')!!}
-{!!qjs(module_asset_url('admin').'/build/js/custom.min.js')!!}
+{!!qjs(module_asset_url('admin').'/build/js/custom.js')!!}
 {!!qjs(module_asset_url('admin').'/js/app.js')!!}

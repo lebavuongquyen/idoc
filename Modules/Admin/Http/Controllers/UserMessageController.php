@@ -20,4 +20,5 @@ class UserMessageController extends Controller
     public function getLastestByCurrentUser(\Request $request) {
         return $this->getLastestByUser(\Auth::user()->id, $request);
     }
+    
 }

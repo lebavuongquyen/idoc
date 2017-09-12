@@ -2,7 +2,7 @@
 
 namespace IDoc\Models;
 
-class UserProfiles extends \IDoc\Models\Base\UserInfo
+class UserProfile extends \IDoc\Models\Base\UserProfile
 {
 	protected $fillable = [
 		'user_id',

@@ -15,3 +15,14 @@ ul.msg_list li.read {
 .user-profile-icon {
     width: 20px;
 }
+
+ul.user_data.msg_list li.user-message-item {
+    padding:0px;
+    margin:0px;
+    margin-bottom: 6px;
+    background: none;
+}
+
+ul.nav.navbar-right.panel_toolbox.dynamic-width {
+    min-width: unset;
+}

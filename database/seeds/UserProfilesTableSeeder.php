@@ -12,8 +12,9 @@ class UserProfilesTableSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('user_infoes')->insert([
-            'user_id' => 1
+        DB::table('user_profiles')->insert([
+            'user_id' => 1,
+            'address' => '18/4 ấp Vạn Hạnh , xã Trung Chánh , huyện Hóc Môn'
         ]);
     }
 }

@@ -19,5 +19,7 @@ Route::group(
             ->name('admin/message_by_current_user');
         Route::get('user/profile', 'UserController@profile')
             ->name('admin/user_profile');
+        Route::get('user/message', 'UserController@message')
+            ->name('admin/user_message');
     }
 );

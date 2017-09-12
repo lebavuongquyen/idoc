@@ -1,5 +1,4 @@
 @extends('admin::layouts.master')
-@section('title' , 'Idoc Admin Page') 
 @section('content')
 <!-- top tiles -->
 <div class="row tile_count">

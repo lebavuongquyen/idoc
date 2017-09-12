@@ -26,7 +26,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  */
 class UserProfile extends Eloquent
 {
-	protected $table = 'user_infoes';
+	protected $table = 'user_profiles';
 	public $timestamps = false;
 
 	protected $casts = [

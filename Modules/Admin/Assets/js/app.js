@@ -27,6 +27,7 @@ var UserMessage = function() {
     this.element = $('#' + this.elementId);
     this.badgeTotal = this.element.find('span.user-message-total');
     this.listContainer = this.element.find('ul.msg_list');
+    this.listContainerProfile = $('ul.user_data.msg_list');
     this.noAvatar = route('public/image/no-avatar.png');
     this.logo = route('public/image/logo.png');
     this.unRead = 0;
@@ -84,8 +85,11 @@ UserMessage.prototype.onUpdated = function(result) {
     var self = this;
     if(result.status === 200) {
         self.listContainer.html('');
+        self.listContainerProfile.html('');
         result.data.forEach(function(item) {
-            self.listContainer.append(self.genMessage(item));
+            var _str = self.genMessage(item);
+            self.listContainer.append(_str);
+            self.listContainerProfile.append(_str);
         });
         if(self.unRead) {
             self.badgeTotal.html(this.unRead).show();

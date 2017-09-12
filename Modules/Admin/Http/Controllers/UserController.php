@@ -13,4 +13,10 @@ class UserController extends Controller
         return $this->render();
     }
 
+    public function message(\Request $request)
+    {
+        $this->page = 'Message';
+        return $this->render();
+    }
+
 }

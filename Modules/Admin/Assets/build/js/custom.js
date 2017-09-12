@@ -1006,6 +1006,9 @@ function init_parsley() {
         validateFront();
     });
     var validateFront = function() {
+        if(!$('#demo-form').length) {
+            return;
+        }
         if(true === $('#demo-form').parsley().isValid()) {
             $('.bs-callout-info').removeClass('hidden');
             $('.bs-callout-warning').addClass('hidden');
@@ -1024,6 +1027,9 @@ function init_parsley() {
         validateFront();
     });
     var validateFront = function() {
+        if(!$('#demo-form').length) {
+            return;
+        }
         if(true === $('#demo-form2').parsley().isValid()) {
             $('.bs-callout-info').removeClass('hidden');
             $('.bs-callout-warning').addClass('hidden');
@@ -1835,7 +1841,7 @@ function init_daterangepicker_single_call() {
     }, function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
     });
-    $('#single_cal3').daterangepicker({
+    $('.daterangepicker-singledate').daterangepicker({
         singleDatePicker: true,
         singleClasses: "picker_3"
     }, function(start, end, label) {
