@@ -20,10 +20,11 @@ function module_asset_path($module)
 }
 
 function module_asset_url($module) {
-    return qurl('/').'/Modules/'.Module::get($module).'/Assets';
+    return qurl('/').'/'.strtolower(Module::get($module)).'/assets';
 }
 
 
-function module_asset($module , $path) {
+function module_asset($url) {
+    list($module , $path) = explode(':', $url);
     return module_asset_url($module).'/' . ltrim($path , '/');
 }

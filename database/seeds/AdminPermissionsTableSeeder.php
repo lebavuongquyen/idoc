@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 
 class AdminPermissionsTableSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -12,8 +13,16 @@ class AdminPermissionsTableSeeder extends Seeder
     public function run()
     {
         DB::table('admin_permissions')->insert([
-            'name' => 'admin/dashboard',
-            'group_ids'=>'[1]',
+            [
+                'name'      => 'admin/dashboard',
+                'group_ids' => '[1]',
+            ],
+            [
+                'name'      => 'admin/setting',
+                'group_ids' => '[1]',
+            ],
         ]);
+
     }
+
 }

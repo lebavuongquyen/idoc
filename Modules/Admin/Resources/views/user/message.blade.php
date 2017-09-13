@@ -1,8 +1,11 @@
-<?php
+@extends('admin::layouts.master')
+@section('content')
+@include('admin::layouts.page')
+<!-- /page content -->
+@endsection
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+@section('css_plugin')
+@endsection
 
+@section('js_plugin')
+@endsection

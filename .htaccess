@@ -4,6 +4,7 @@
     </IfModule>
 
     RewriteEngine On
+    RewriteRule ^admin/assets/(.*) Modules/Admin/Assets/$1
     # Allow css, js
     RewriteCond %{REQUEST_URI} !\.(?:css|js)$ [NC]
     # Redirect Trailing Slashes If Not A Folder...

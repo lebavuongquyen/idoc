@@ -10,7 +10,9 @@ Route::group(
         Route::group(
             ['middleware' => ['access_admin']],
             function() {
-                Route::get('/', 'AdminController@index')->name('admin/dashboard');
+                Route::get('/', 'DashboardController@index')->name('admin/dashboard');
+                Route::get('/setting', 'SettingController@index')->name('admin/setting');
+                Route::get('/setting/list', 'SettingController@getList')->name('admin/setting_list');
             }
         );
         Route::get('lastest-message/{id}', 'UserMessageController@getLastestByUser')

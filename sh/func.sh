@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # get environment variable
 
 func_app_dir() {

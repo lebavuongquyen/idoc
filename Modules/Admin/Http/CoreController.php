@@ -48,9 +48,9 @@ class CoreController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(\Request $request)
     {
-        return view('admin::dashboard.index');
+        return $this->render();
     }
 
     /**
@@ -122,4 +122,18 @@ class CoreController extends Controller
         return view($view, $data, $mergeData)->with('page' , $this->page);
     }
 
+    /**
+     * 
+     * @return \Eloquent
+     */
+    public function model(){
+        return null;
+    }
+    
+    /*
+     * @param mixed $data
+     */
+    public function setData($data){
+        $this->result['data'] = $data;
+    }
 }

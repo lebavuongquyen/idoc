@@ -26,3 +26,20 @@ ul.user_data.msg_list li.user-message-item {
 ul.nav.navbar-right.panel_toolbox.dynamic-width {
     min-width: unset;
 }
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding:5px 8px;
+    line-height: 20px;
+}
+
+.btn-table {
+    display: inline-block;
+    line-height: 20px;
+    margin-right: 5px;
+    min-width: 20px;
+    text-decoration: none;
+    font-size: 12px;
+    padding:0px 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
