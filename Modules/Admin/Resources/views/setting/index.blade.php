@@ -16,7 +16,7 @@
                 <p class="text-muted font-13 m-b-30">
                     List all settings
                 </p>
-                <table id="datatable" class="table table-striped table-bordered">
+                <table id="datatable" class="table table-striped table-bordered" style="width: 100%">
                 </table>
             </div>
         </div>

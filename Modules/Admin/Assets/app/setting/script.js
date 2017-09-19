@@ -4,27 +4,32 @@
  * and open the template in the editor.
  */
 
-
+var grid,grid2;
 /* global dataSource */
-var helper = new DataTableHelper();
 (function() {
     "use strict";
-    $('#datatable').DataTable({
-        data: dataSource,
+    grid = new Grid($('#datatable'));
+    grid.setOptions({
+        data : dataSource,
         columns: [
-            helper.column.action([
-                {icon:'plus' , text : 'Add'}
+            grid.helper.column.action([
+                grid.helper.button.edit(),
+                grid.helper.button.delete()
             ]),
             {title: 'Name', data: 'name'},
             {
                 title: 'Value', data: 'value', render: function(data, type, row) {
-                    if ($.isArray(data)) {
-                        return helper.column.render.joinArray(', ', data);
+                    if($.isArray(data)) {
+                        return grid.helper.column.render.joinArray(', ', data);
                     }
-                    return null;
+                    return data;
                 }
             }
         ],
-        order: [[ 1, "asc" ]]
+        onInit : function(){
+            console.log($(arguments[0].target).find('tbody tr').length);
+        },
     });
+    grid.render();
+    grid.addRow({name:'test' , value:'hello'});
 })();

@@ -19,6 +19,6 @@
 @yield('css_plugin')
 
 <!-- Custom Theme Style -->
-{!!qcss(module_asset('admin:build/css/custom.min.css'))!!}
+{!!qcss(module_asset('admin:build/css/custom.css'))!!}
 {!!qcss(module_asset('admin:css/app.css'))!!}
 

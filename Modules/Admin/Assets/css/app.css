@@ -43,3 +43,15 @@ ul.nav.navbar-right.panel_toolbox.dynamic-width {
     font-weight: bold;
     cursor: pointer;
 }
+
+table[role=grid] tbody tr:hover {
+    background: #ccffcc;
+}
+
+table[role=grid] tbody tr.selected {
+    background: #99ff99;
+}
+
+table[role=grid] tbody tr.selected td.active {
+    background-color: #99ff99;
+}
