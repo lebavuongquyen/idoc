@@ -33,8 +33,7 @@
 @endsection
 @section('script')
 <script>
-    var dataSource = {!!json_encode($list)!!} ;
-
+    var dataSource = {!!json_encode($list)!!} ; 
 </script>
 {!! qjs(module_asset('admin:app/setting/script.js')) !!}
 @endsection

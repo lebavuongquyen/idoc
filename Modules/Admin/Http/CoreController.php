@@ -119,21 +119,32 @@ class CoreController extends Controller
     public function render($data = [], $mergeData = [])
     {
         $view = "admin::{$this->name}.{$this->action}";
-        return view($view, $data, $mergeData)->with('page' , $this->page);
+        return view($view, $data, $mergeData)->with('page', $this->page);
     }
 
     /**
      * 
      * @return \Eloquent
      */
-    public function model(){
+    public function model()
+    {
         return null;
     }
-    
+
     /*
      * @param mixed $data
      */
-    public function setData($data){
+
+    public function setData($data)
+    {
         $this->result['data'] = $data;
+        if (
+            empty($this->result['total']) && (
+            is_array($data) || is_a($data, 'Illuminate\Database\Eloquent\Collection')
+            )
+        ) {
+            $this->result['total'] = count($data);
+        }
     }
+
 }

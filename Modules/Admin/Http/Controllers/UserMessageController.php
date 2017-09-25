@@ -13,7 +13,7 @@ class UserMessageController extends Controller
         if (!$user) {
             abort(404, 'Can not found the specified user!');
         }
-        $this->result['data'] = $user->lastestMessages;
+        $this->setData($user->lastestMessages);
         return $this->result;
     }
     
