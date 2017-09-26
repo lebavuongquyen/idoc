@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 
-/* global dataSource */
+/* global dataSource , Grid */
 var grid, grid2;
+var module = 'Setting';
 
 addItem = function(e){
-    alert('add item');
+    loadFrom();
 };
 
 editItem = function(e){
@@ -18,6 +19,19 @@ editItem = function(e){
 deleteItem = function(e){
     alert('delete item');
 };
+
+var loadForm = function($id){
+    Widget.dialog({
+        title: 'Add ' + module,
+        content : formContent($id)
+    });
+};
+
+var formContent  = function($id){
+    var ele = $('#frm').clone();
+    console.log(ele);
+    return ele;
+}
 
 (function() {
     "use strict";

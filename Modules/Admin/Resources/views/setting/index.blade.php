@@ -22,6 +22,14 @@
         </div>
     </div>
 </div>
+<form id="frm" class="form-horizontal" style="display: none;">
+    <div class="form-group">
+        <label class="col-md-6">Name</label>
+        <div class="col-md-6">
+            <input type="text" name="name" class="form-control">
+        </div>
+    </div>
+</form>
 <!-- /page content -->
 @endsection
 @section('css_plugin')
