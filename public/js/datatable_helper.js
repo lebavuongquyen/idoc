@@ -77,7 +77,7 @@ DataTableButton.prototype.add = function($option) {
         icon: _opt.icon || 'plus-circle',
         class: _opt.class || '',
         display: _opt.display || 'icon-only',
-        click: _opt.click || (typeof addItem === 'function' ? 'addItem(event);' : ''),
+        click: _opt.click || (typeof addItem === 'function' ? 'addItem(event , this);' : ''),
         data: _opt.data || null,
     };
 };
@@ -90,7 +90,7 @@ DataTableButton.prototype.edit = function($option) {
         icon: _opt.icon || 'pencil-square-o',
         class: _opt.class || '',
         display: _opt.display || 'icon-only',
-        click: _opt.click || (typeof editItem === 'function' ? 'editItem(event);' : ''),
+        click: _opt.click || (typeof editItem === 'function' ? 'editItem(event , this);' : ''),
         data: _opt.data || null,
     };
 };
@@ -103,7 +103,7 @@ DataTableButton.prototype.delete = function($option) {
         icon: _opt.icon || 'ban',
         class: _opt.class || '',
         display: _opt.display || 'icon-only',
-        click: _opt.click || (typeof deleteItem === 'function' ? 'deleteItem(event);' : ''),
+        click: _opt.click || (typeof deleteItem === 'function' ? 'deleteItem(event , this);' : ''),
         data: _opt.data || null,
     };
 };

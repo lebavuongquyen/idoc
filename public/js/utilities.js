@@ -735,12 +735,12 @@ var Widget = {
             + '        <div class="modal-content">'
             + '            <div class="modal-header">'
             + '                <h5 class="modal-title" id="model_label_'
-            + _id + '">' + (_data.title || '') + '</h5>'
+            + _id + '"></h5>'
             + '                <button type="button" class="close" data-dismiss="modal" aria-label="Close">'
             + '                    <span aria-hidden="true">×</span>'
             + '                </button>'
             + '            </div>'
-            + '            <div class="modal-body">' + (_data.content || '') + '</div>'
+            + '            <div class="modal-body"></div>'
             + '            <div class="modal-footer">'
             + '                <div class="pull-left">'
             + '                </div>'
@@ -753,6 +753,8 @@ var Widget = {
             + '</div>';
         $('body').append(_str);
         var _con = $('#' + _id);
+        _con.find('h5.modal-title').append(_data.title);
+        _con.find('.modal-body').append(_data.content);
         if(typeof _data.buttons === 'object') {
             for(var i in _data.buttons) {
                 var _btn = _data.buttons[i];

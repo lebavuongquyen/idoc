@@ -9,11 +9,11 @@ var grid, grid2;
 var module = 'Setting';
 
 addItem = function(e){
-    loadFrom();
+    loadForm();
 };
 
-editItem = function(e){
-    alert('edit item');
+editItem = function(e , ele){
+    loadForm($(ele).data('value'));
 };
 
 deleteItem = function(e){
@@ -28,10 +28,10 @@ var loadForm = function($id){
 };
 
 var formContent  = function($id){
-    var ele = $('#frm').clone();
-    console.log(ele);
+    var ele = $('#frm').clone().show();
+    ele.find('input[name=name]').val($id).prop('readonly', $id ? true : false);
     return ele;
-}
+};
 
 (function() {
     "use strict";
