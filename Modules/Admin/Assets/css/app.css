@@ -55,3 +55,27 @@ table[role=grid] tbody tr.selected {
 table[role=grid] tbody tr.selected td.active {
     background-color: #99ff99;
 }
+
+.colon:after {
+    content: ':'
+}
+
+.bootstrap-tagsinput {
+    width:100%;
+}
+
+.modal .modal-header button.close{
+    position: absolute;
+    top:-10px;
+    right:-10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    margin: 0;
+    text-align: center;
+    background: white;
+    opacity: 1;
+    -moz-box-shadow: 0 0 3px #ccc;
+    -webkit-box-shadow: 0 0 3px #ccc;
+    box-shadow: 0 0 3px #ccc;
+}

@@ -28,6 +28,7 @@
         </div>
     </body>
     @include('admin::layouts.js')
+    @include('admin::layouts.pnotify')
     @yield('script')
     @yield('style')
 

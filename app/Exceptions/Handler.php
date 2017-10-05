@@ -1,5 +1,4 @@
 <?php
-
 namespace IDoc\Exceptions;
 
 use Exception;
@@ -8,6 +7,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+
     /**
      * A list of the exception types that should not be reported.
      *
@@ -44,6 +44,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($request->expectsJson()) {
+            return response()->json(
+                    $this->getJsonMessage($exception), $this->getExceptionHTTPStatusCode($exception)
+            );
+        }
         return parent::render($request, $exception);
     }
 
@@ -61,5 +66,23 @@ class Handler extends ExceptionHandler
         }
 
         return redirect()->guest(route('login'));
+    }
+
+    protected function getJsonMessage(Exception $e)
+    {
+        // You may add in the code, but it's duplication
+        return [
+            'status' => $this->getExceptionHTTPStatusCode($e),
+            'message' => $e->getMessage(),
+            'error' => $e->getTrace()
+        ];
+    }
+
+    protected function getExceptionHTTPStatusCode(Exception $e)
+    {
+        // Not all Exceptions have a http status code
+        // We will give Error 500 if none found
+        return method_exists($e, 'getStatusCode') ?
+            $e->getStatusCode() : 500;
     }
 }

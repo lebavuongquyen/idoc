@@ -7,7 +7,7 @@
 /* global addItem */
 
 'use strict';
-var addItem , editItem , deleteItem , saveItem;
+var addItem, editItem, deleteItem, saveItem;
 var DataTableHelper = function() {
     this.column = new DataTableColumn();
     this.button = new DataTableButton();
@@ -24,7 +24,7 @@ var DataTableColumn = function() {
     return this;
 };
 
-DataTableColumn.prototype.action = function($actions , $opt) {
+DataTableColumn.prototype.action = function($actions, $opt) {
     var self = this;
     var _opt = $opt || {};
     return {
@@ -198,7 +198,7 @@ DataTableButton.prototype.common = function() {
             text: '<i class="fa fa-plus-square-o"></i> Add',
             className: 'btn-sm',
             action: function() {
-                if (typeof addItem === 'function') {
+                if(typeof addItem === 'function') {
                     addItem();
                 }
             }
@@ -215,7 +215,54 @@ DataTableApi.prototype.selected = function(api) {
 };
 
 DataTableApi.prototype.addRow = function(dt, data) {
-    return dt.row.add(data).draw(false);
+    return dt.row.add(data).draw();
+};
+
+DataTableApi.prototype.addRows = function(dt, datas) {
+    return dt.rows.add(datas).draw();
+};
+
+DataTableApi.prototype.insertRow = function(dt, index, item, callback) {
+    var _data = dt.data().toArray();
+    _data = Util.arrayInsert(_data , index , item);
+    this.clear(dt);
+    this.addRows(dt , _data);
+    dt.draw();
+    if(typeof callback === 'function') {
+        callback(dt, index, item);
+    }
+    return dt;
+};
+
+DataTableApi.prototype.clear = function(dt, callback) {
+    dt.clear();
+    if(typeof callback === 'function') {
+        callback(dt);
+    }
+    return dt;
+};
+
+DataTableApi.prototype.draw = function(dt, callback) {
+    dt.draw();
+    if(typeof callback === 'function') {
+        callback(dt);
+    }
+    return dt;
+};
+
+DataTableApi.prototype.reload = function(dt, callback) {
+    if(dt.ajax.url()) {
+        return dt.ajax.reload(callback);
+    }
+    return this.draw(dt, callback);
+};
+
+DataTableApi.prototype.removeById = function(dt, id, callback) {
+    dt.row('#' + id).remove().draw();
+    if(typeof callback === 'function') {
+        callback(dt, id);
+    }
+    return dt;
 };
 
 var Grid = function($target, $opt) {
@@ -363,7 +410,7 @@ Grid.prototype.selected = function() {
     return this.helper.api.selected(this.api).toArray();
 };
 
-Grid.prototype.selectedRow = function(){
+Grid.prototype.selectedRow = function() {
     var ele = this.target.find('tbody tr.selected');
     return ele.length ? ele : null;
 };
@@ -372,18 +419,54 @@ Grid.prototype.addRow = function(data) {
     return this.helper.api.addRow(this.dt, data);
 };
 
-Grid.prototype.data = function(){
+Grid.prototype.addRows = function(data) {
+    return this.helper.api.addRows(this.dt, data);
+};
+
+Grid.prototype.data = function() {
     return this.dt.rows().data().toArray();
 };
 
-Grid.prototype.rowById = function($id){
+Grid.prototype.total = function() {
+    return this.dt.page.info().recordsTotal;
+};
+
+Grid.prototype.searchTotal = function() {
+    return this.dt.page.info().recordsDisplay;
+};
+
+Grid.prototype.rowById = function($id) {
     var element = this.target.find('tbody tr#' + $id);
     return element.length ? element : null;
 };
 
-Grid.prototype.itemById = function($id){
+Grid.prototype.itemById = function($id) {
     var rowId = this.options.rowId;
-    return this.data().find(function(item){
+    return this.data().find(function(item) {
         return item[rowId] == $id;
     });
+};
+
+Grid.prototype.reload = function(callback) {
+    return this.helper.api.reload(this.dt, callback);
+};
+
+Grid.prototype.itemIndex = function($id) {
+    var rowId = this.options.rowId;
+    return this.data().findIndex(function(item) {
+        return item[rowId] == $id;
+    });
+};
+
+Grid.prototype.updateById = function($id, $data) {
+    var _data = this.itemById($id);
+    return this.dt.row('#' + $id).data($.extend(_data, $data)).draw();
+};
+
+Grid.prototype.removeById = function($id, $callback) {
+    return this.helper.api.removeById(this.dt, $id, $callback);
+};
+
+Grid.prototype.insertRow = function($index, $item, $callback) {
+    return this.helper.api.insertRow(this.dt, $index, $item, $callback);
 };

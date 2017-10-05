@@ -59,8 +59,23 @@ var Util = {
                     setTimeout($options.success, 20, result, statusText, xhr);
                     return;
                 }
+                
+                if($options.showMessage) {
+                    Widget.notify({
+                        title : result.status === 200 ? 'Success' : 'Error',
+                        text: result.message || (result.status === 200 ? 'Action success.' : 'Something went wrong.'),
+                        type: result.status === 200 ? 'success' : 'error',
+                    });
+                }
             },
             error: function(xhr) {
+                if($options.showMessage) {
+                    Widget.notify({
+                        title:'Error',
+                        text: xhr.responseJSON ? (xhr.responseJSON.message || 'Error') : xhr.statusText,
+                        type: 'error'
+                    });
+                }
                 if(xhr.status === 401 && ! $('.show-login-error').length) {
                     Interval.clearAll();
                     return;
@@ -78,6 +93,9 @@ var Util = {
                 _options[x] = $options[x];
             }
         });
+        if(_options.method.toLowerCase() === 'post') {
+            _options.data = $.extend(_options.data, {_token: global._token});
+        }
         AjaxList[_id] = $.ajax(_options);
         return AjaxList[_id];
     },
@@ -557,6 +575,21 @@ var Util = {
             this.requestFullScreen(elem);
         }
         return false;
+    },
+    arrayInsert: function(arr, index, item) {
+        if(! (arr instanceof Array)) {
+            return arr;
+        }
+        if(index >= arr.length) {
+            arr.push(item);
+        }
+        else if(index <= 0) {
+            arr.unshift(item);
+        }
+        else {
+            arr.splice(index, 0, item);
+        }
+        return arr;
     }
 };
 var Widget = {
@@ -817,6 +850,40 @@ var Widget = {
         else {
             _con.modal();
         }
+    },
+    notify: function($option) {
+        if(window['PNotify']) {
+            var _option = $.extend({
+                title: "Notify",
+                type: "info",
+                nonblock: {
+                    nonblock: false
+                },
+                hide: true,
+                history: {
+                    history: false
+                },
+                mobile: {
+                    swipe_dismiss: true
+                },
+                buttons: {
+                    sticker: false,
+                },
+                delay: 5000,
+                closeonclick : true
+            }, $option);
+            var notice = new PNotify(_option);
+            notice.get().on('click', function() {
+                if(_option.closeonclick) {
+                    notice.remove();
+                }
+                if(typeof _option.click === 'function') {
+                    _option.click(notice);
+                }
+            });
+            return notice;
+        }
+        alert($option.text);
     }
 };
 var LSKEY = {

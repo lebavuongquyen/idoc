@@ -17,7 +17,7 @@ class GlobalViewVariable
     public function handle($request, Closure $next)
     {
         \View::composer('*', function($view) use ($request){
-            if ($request->route()->getActionName() !== 'Closure') {
+            if ($request->route() && $request->route()->getActionName() !== 'Closure') {
                 list($controller, $action) = explode('@', $request->route()->getActionName());
             }
             else {

@@ -48,7 +48,7 @@ class CoreController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index(\Request $request)
+    public function index(Request $request)
     {
         return $this->render();
     }

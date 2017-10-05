@@ -13,6 +13,7 @@ Route::group(
                 Route::get('/', 'DashboardController@index')->name('admin/dashboard');
                 Route::get('/setting', 'SettingController@index')->name('admin/setting');
                 Route::get('/setting/list', 'SettingController@getList')->name('admin/setting_list');
+                Route::post('/setting/save', 'SettingController@save')->name('admin/setting_save');
             }
         );
         Route::get('lastest-message/{id}', 'UserMessageController@getLastestByUser')
