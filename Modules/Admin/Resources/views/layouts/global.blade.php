@@ -1,5 +1,6 @@
 <script type="text/javascript">
     var global = {
+        user_id : {{$user->id}},
         base:'{{qurl("/admin")}}',
         module:'Admin',
         domain:'{{qurl("")}}',

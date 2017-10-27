@@ -1,4 +1,4 @@
-/* global baseUrl,stopReloader,$, jQuery, startReloader, moment, createUrl, ss, Notification */
+/* global baseUrl,$, jQuery, moment, createUrl, ss, Notification */
 var AjaxList = [];
 var QLog = function($type) {
     var args = [];
@@ -40,6 +40,9 @@ var Util = {
     ajax: function($options) {
         var _hideLoading = $options.hideLoading;
         var _id = Util.guid();
+        if(typeof $options.showMessage === 'undefined') {
+            $options.showMessage = true;
+        }
         var _options = {
             method: $options.method || $options.type || "get",
             dataType: $options.dataType || "html",
@@ -59,10 +62,10 @@ var Util = {
                     setTimeout($options.success, 20, result, statusText, xhr);
                     return;
                 }
-                
+
                 if($options.showMessage) {
                     Widget.notify({
-                        title : result.status === 200 ? 'Success' : 'Error',
+                        title: result.status === 200 ? 'Success' : 'Error',
                         text: result.message || (result.status === 200 ? 'Action success.' : 'Something went wrong.'),
                         type: result.status === 200 ? 'success' : 'error',
                     });
@@ -71,7 +74,7 @@ var Util = {
             error: function(xhr) {
                 if($options.showMessage) {
                     Widget.notify({
-                        title:'Error',
+                        title: 'Error',
                         text: xhr.responseJSON ? (xhr.responseJSON.message || 'Error') : xhr.statusText,
                         type: 'error'
                     });
@@ -590,7 +593,40 @@ var Util = {
             arr.splice(index, 0, item);
         }
         return arr;
-    }
+    },
+    modal: function($data) {
+        return Widget.dialog($data);
+    },
+    hideModal: function($obj) {
+        if(! ($obj instanceof jQuery)) {
+            $obj = $($obj);
+        }
+        if($obj.hasClass('modal')) {
+            return $obj.modal('hide');
+        }
+        return $obj.parents('.modal').modal('hide');
+    },
+    remove: function($obj, $parent) {
+        if(! ($obj instanceof jQuery)) {
+            $obj = $($obj);
+        }
+        if($parent) {
+            return $obj.parents($parent).remove();
+        }
+        return $obj.remove();
+    },
+    uri: function($url) {
+        var _part = $url.split('\?');
+        return _part[0];
+    },
+    query: function($url) {
+        var _part = $url.split('\?');
+        return _part.length < 2 ? '' : _part[1];
+    },
+    query2obj: function(search) {
+        return JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,
+            '":"') + '"}');
+    },
 };
 var Widget = {
     numpad: function($data, $opener) {
@@ -674,87 +710,24 @@ var Widget = {
         });
     },
     confirm: function($data) {
-        var _id = Util.guid();
-        var _data = $data || {};
-        _data.id = _id;
-        Util.ajax({
-            url: createUrl('widget/confirm'),
-            showMessage: true,
-            data: {
-                title: _data.title || 'Confirm',
-                message: _data.message,
-                template: _data.template,
-                template_data: _data.template_data,
-                translate: _data.translate,
-                translate_section: _data.translate_section,
-                id: _id
-            },
-            success: function(result) {
-                $('body').append(result);
-                var _modal = $('#' + _id);
-                var _btnYes = _modal.find('.widget-confirm-yes');
-                var _btnNo = _modal.find('.widget-confirm-no');
-                if(typeof _data.yes === 'string') {
-                    _btnYes.attr('onclick', _data.yes);
-                }
-                if(typeof _data.no === 'string') {
-                    _btnNo.attr('onclick', _data.no);
-                }
-                _btnYes.bind('click', function() {
-                    if(typeof _data.yes === 'function') {
-                        _data.yes(_modal, _data);
-                        return;
-                    }
-                    if(typeof _data.callback === 'function') {
-                        _data.callback(true, _modal, _data);
-                    }
-                });
-                _btnNo.bind('click', function() {
-                    if(typeof _data.no === 'function') {
-                        _data.no(_modal, _data);
-                        return;
-                    }
-                    if(typeof _data.callback === 'function') {
-                        _data.callback(false, _modal, _data);
-                    }
-                });
-                _modal.find('.modal-dialog').width(_data.width || null);
-                _modal.on('hidden.bs.modal', function() {
-                    $(this).remove();
-                });
-                _modal.modal();
-            }
+        this.dialog({
+            title: $data.title || 'Confirm',
+            content: $data.content,
+            buttons: [
+                {text: 'Yes', float: 'right', class: 'widget-confirm-yes btn-primary', dismiss: true, click: $data.yes
+                },
+                {text: 'No', float: 'left', class: 'widget-confirm-no', dismiss: true, click: $data.no},
+            ],
+            hideClose: true,
+            width: $data.width || '300px'
         });
     },
     alert: function($data) {
-        var _id = Util.guid();
-        var _data = $data || {};
-        _data.id = _id;
-        Util.ajax({
-            url: createUrl('widget/alert'),
-            showMessage: true,
-            data: {
-                title: _data.title || 'Notification',
-                type: _data.type || 'notification',
-                message: _data.message,
-                template: _data.template,
-                template_data: _data.template_data,
-                translate: _data.translate,
-                translate_section: _data.translate_section,
-                id: _id
-            },
-            success: function(result) {
-                $('body').append(result);
-                var _modal = $('#' + _id);
-                _modal.find('.modal-dialog').width(_data.width || null);
-                _modal.on('hidden.bs.modal', function() {
-                    $(this).remove();
-                    if(typeof _data.callback === 'function') {
-                        _data.callback(_modal, _id);
-                    }
-                });
-                _modal.modal();
-            }
+        this.dialog({
+            title: $data.title || 'Confirm',
+            content: $data.content,
+            hidden: $data.hidden,
+            width: $data.width || '300px'
         });
     },
     dialog: function($data) {
@@ -769,9 +742,10 @@ var Widget = {
             + '            <div class="modal-header">'
             + '                <h5 class="modal-title" id="model_label_'
             + _id + '"></h5>'
-            + '                <button type="button" class="close" data-dismiss="modal" aria-label="Close">'
-            + '                    <span aria-hidden="true">×</span>'
-            + '                </button>'
+            + (_data.hideClose ? '' : ''
+                + '                <button type="button" class="close" data-dismiss="modal" aria-label="Close">'
+                + '                    <span aria-hidden="true">×</span>'
+                + '                </button>')
             + '            </div>'
             + '            <div class="modal-body"></div>'
             + '            <div class="modal-footer">'
@@ -821,15 +795,15 @@ var Widget = {
             _con.find('.modal-dialog').width(_data.width);
         }
         if(typeof _data.show === 'function') {
-            _con.on('show.bs.modal', _data.show);
+            _con.on('show.bs.modal', {modal: _con, id: _id}, _data.show);
         }
         if(typeof _data.shown === 'function') {
-            _con.on('shown.bs.modal', _data.shown);
+            _con.on('shown.bs.modal', {modal: _con, id: _id}, _data.shown);
         }
         if(typeof _data.hide === 'function') {
-            _con.on('hide.bs.modal', _data.hide);
+            _con.on('hide.bs.modal', {modal: _con, id: _id}, _data.hide);
         }
-        _con.on('hidden.bs.modal', function(e) {
+        _con.on('hidden.bs.modal', {modal: _con, id: _id}, function(e) {
             if(typeof _data.hidden === 'function') {
                 _data.hidden(e);
             }
@@ -850,6 +824,7 @@ var Widget = {
         else {
             _con.modal();
         }
+        return _con;
     },
     notify: function($option) {
         if(window['PNotify']) {
@@ -870,7 +845,7 @@ var Widget = {
                     sticker: false,
                 },
                 delay: 5000,
-                closeonclick : true
+                closeonclick: true
             }, $option);
             var notice = new PNotify(_option);
             notice.get().on('click', function() {
@@ -1045,11 +1020,7 @@ if(jQuery.validator) {
                 validator.messageList.push(_msg);
             });
             setTimeout(function() {
-                $.fn.showNotification({
-                    type: "error",
-                    title: "",
-                    content: validator.messageList.join('<br>')
-                });
+                Notice.error(validator.messageList.join('<br>'));
             }, 100);
 
         },
@@ -1075,6 +1046,27 @@ if(jQuery.validator) {
                 showMessage: true
             });
         }
+    });
+    jQuery.extend(jQuery.validator.messages, {
+        required: function(invalid, ele) {
+            return $(ele).data('msg-required') || "The field " + ele.name.replace('_' , ' ').capitalize(true) + " is required.";
+        },
+        remote: "Please fix this field.",
+        email: "Please enter a valid email address.",
+        url: "Please enter a valid URL.",
+        date: "Please enter a valid date.",
+        dateISO: "Please enter a valid date (ISO).",
+        number: "Please enter a valid number.",
+        digits: "Please enter only digits.",
+        creditcard: "Please enter a valid credit card number.",
+        equalTo: "Please enter the same value again.",
+        accept: "Please enter a value with a valid extension.",
+        maxlength: jQuery.validator.format("Please enter no more than {0} characters."),
+        minlength: jQuery.validator.format("Please enter at least {0} characters."),
+        rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long."),
+        range: jQuery.validator.format("Please enter a value between {0} and {1}."),
+        max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
+        min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
     });
 }
 
@@ -1694,4 +1686,86 @@ window.onbeforeunload = window.onunload = function() {
         AjaxList[x].abort();
     }
     return null;
+};
+
+var Notice = {
+    notify: function($option) {
+        if(window['PNotify']) {
+            var _option = $.extend({
+                title: "Notify",
+                type: "info",
+                nonblock: {
+                    nonblock: false
+                },
+                hide: true,
+                history: {
+                    history: false
+                },
+                mobile: {
+                    swipe_dismiss: true
+                },
+                buttons: {
+                    sticker: false,
+                },
+                delay: 5000,
+                closeonclick: true
+            }, $option);
+            var notice = new PNotify(_option);
+            notice.get().on('click', function() {
+                if(_option.closeonclick) {
+                    notice.remove();
+                }
+                if(typeof _option.click === 'function') {
+                    _option.click(notice);
+                }
+            });
+            return notice;
+        }
+        return alert($option.text);
+    },
+    error: function($message) {
+        return this.notify({
+            title: 'Error',
+            type: 'error',
+            text: $message
+        });
+    },
+    success: function($message) {
+        return this.notify({
+            title: 'Success',
+            type: 'success',
+            text: $message
+        });
+    },
+    info: function($message) {
+        return this.notify({
+            title: 'Notice',
+            type: 'info',
+            text: $message
+        });
+    },
+    ajaxResult: function(result) {
+        return this.notify({
+            title: result.status === 200 ? 'Success' : 'Error',
+            text: result.message || (result.status === 200 ? 'Action success' : 'Something when wrong'),
+            type: result.status === 200 ? 'success' : 'error'
+        });
+    }
+};
+
+jQuery.fn.serializeObject = function() {
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if(o[this.name] !== undefined) {
+            if(! o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        }
+        else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
 };

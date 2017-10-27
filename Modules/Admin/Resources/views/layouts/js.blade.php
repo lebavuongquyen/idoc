@@ -39,6 +39,9 @@
 {!!qjs('public/vendors/jquery-validation/dist/additional-methods.js')!!}
 {!!qjs('public/vendors/lockscreen/js/lockscreen.js')!!}
 {!!qjs('public/vendors/lockscreen/js/lockscreen-icon.js')!!}
+<!-- Ben Alman deparam-->
+{!!qjs('public/vendors/jquery-bbq/jquery.ba-bbq.min.js')!!}
+
 
 <!-- js for pages -->
 @yield('js_plugin')

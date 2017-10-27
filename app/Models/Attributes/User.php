@@ -54,11 +54,6 @@ trait User
         ]);
     }
 
-    public function pr()
-    {
-        return $this->belongsTo(self::class, 'parent_id');
-    }
-
     public function messages()
     {
         return $this->hasMany(\IDoc\Models\UserMessage::class, 'user_id')->orderBy('id', 'desc');

@@ -74,7 +74,7 @@ class Handler extends ExceptionHandler
         return [
             'status' => $this->getExceptionHTTPStatusCode($e),
             'message' => $e->getMessage(),
-            'error' => $e->getTrace()
+            'error' => array_slice($e->getTrace(), 0, 5)
         ];
     }
 

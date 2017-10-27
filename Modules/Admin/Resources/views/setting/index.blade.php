@@ -69,7 +69,7 @@
         <input type="text" name="keys[0]" class="form-control input object-keys" value="" placeholder="key">
     </div>
     <div class="col-xs-6">
-        <input type="text" name="values[0]" class="form-control input object-values" value="" placeholder="value">
+        <input type="text" name="values[0]" class="form-control input object-values" value="" placeholder="value" disabled>
     </div>
 </div>
 <!-- /page content -->

@@ -11,6 +11,7 @@ class SettingController extends Controller
 
     public function index(Request $request) {
         $this->page = 'Setting';
+        $list = [];
         foreach(\Setting::all() as $key=>$val) {
             $list[] = ['name' => $key , 'value' => $val];
         }
@@ -21,8 +22,13 @@ class SettingController extends Controller
         $this->setData(\Setting::all());
     }
     
-    public function save(Request $request){
+    public function store(Request $request){
         \Setting::set($request->get('name') , $request->get('value'));
+        return $this->result;
+    }
+    
+    public function delete(Request $request) {
+        \Setting::forget($request->get('name'));
         return $this->result;
     }
 }

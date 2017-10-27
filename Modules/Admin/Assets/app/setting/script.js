@@ -17,19 +17,39 @@ editItem = function(e, ele) {
     loadForm($(ele).data('value'));
 };
 
-deleteItem = function(e) {
-    alert('delete item');
+deleteItem = function(e, ele) {
+    var id = $(ele).data('value');
+    Widget.confirm({
+        content: 'Do you really want to delete ' + id,
+        yes: function() {
+            Util.ajax({
+                url: url('setting/delete'),
+                method: 'post',
+                data: {name: id},
+                dataType: 'json',
+                success: function(result) {
+                    if(result.status === 200) {
+                        grid.removeById(id);
+                    }
+                    Notice.ajaxResult(result);
+                }
+            });
+        }
+    });
 };
 
 var loadForm = function($id) {
+    if($id) {
+        $id += '';
+    }
     var content = formContent($id);
-    Widget.dialog({
+    Util.modal({
         title: 'Add ' + module,
         content: content,
         width: '300px',
         buttons: [
             {
-                text: 'Save', class: 'right',
+                text: 'Save', float: 'right',
                 click: function(e) {
                     changeValue(e);
                     saveValue(content);
@@ -41,11 +61,11 @@ var loadForm = function($id) {
 
 var formContent = function($id) {
     var ele = $('#frm').clone().show();
-    if (!$id) {
+    if(! $id) {
         $name = 'new';
     }
     else {
-        $name = $id.replace('::' , '__');
+        $name = $id.replace('::', '__');
     }
     ele.attr('id', 'frm' + $name)
         .find('input[name=name]')
@@ -101,22 +121,83 @@ var setValue = function(value, type, ele) {
             break;
     }
 };
-
+var count = 0;
 var displayValueObject = function(value, ele) {
     var container = ele.find('.value-object-container');
+    count ++;
     container.html('');
+
     var temp = $('#object_key').clone().attr('id', null).show();
     if($.isEmptyObject(value)) {
-        container.append(temp);
-        return;
-    }
-    var index = 0;
-    for(var i in value) {
-        temp.find('input:first').attr('name', 'keys[' + index + ']').val(i);
-        temp.find('input:last').attr('name', 'values[' + index + ']').val(value[i]);
         container.append(temp.clone());
     }
+    else {
+        var index = 0;
+        var _new;
+        for(var i in value) {
+            _new = temp.clone();
+            _new.find('input:last').prop('disabled', false);
+            _new.find('input:first').attr('name', 'keys[' + index + ']').val(i);
+            _new.find('input:last').attr('name', 'values[' + index + ']').val(value[i]);
+            container.append(_new);
+            index ++;
+        }
+        _new = temp.clone();
+        _new.find('input:first').attr('name', 'keys[' + index + ']');
+        _new.find('input:last').attr('name', 'values[' + index + ']');
+        index ++;
+        container.append(_new);
+    }
+
     ele.off('change', 'input.input').on('change', 'input.input', changeValue);
+    container.off('keyup').on('keyup', '.form-group:not(.new-row) input.object-keys:last', function(e) {
+        $(this).parents('.form-group').removeClass('new-row');
+        container.find('.form-group:not(.new-row) input.object-values:last').prop('disabled', $(this).val()
+            ? false : true);
+    })
+        .on('blur', '.form-group:not(.new-row) input:last', function(e) {
+            console.log('blur');
+            container.find('.new-row').removeClass('new-row');
+        })
+        .on('keyup', '.form-group:not(.new-row) input:last', function(e) {
+            if($(this).val()) {
+                if(container.find('.new-row').length === 0) {
+                    _new = temp.clone().addClass('new-row');
+                    var i = container.find('.form-group').length;
+                    _new.find('input:first').attr('name', 'keys[' + i + ']');
+                    _new.find('input:last').attr('name', 'values[' + i + ']');
+                    container.append(_new);
+                }
+            }
+            else {
+                container.find('.new-row').remove();
+            }
+        })
+        .on('blur', '.object-keys', function(e) {
+            var name = this.name;
+            var value = this.value;
+            var ele = $(this);
+            var error = false;
+            if (!value) {
+                return;
+            }
+            container.find('.object-keys:not([name="' + name + '"])').each(function() {
+                if(error) {
+                    return;
+                }
+                if(this.value === value) {
+                    error = true;
+                }
+            });
+            if(error) {
+                ele.addClass('error');
+                Notice.error('This key name is already exist');
+                ele.focus();
+            }
+            else {
+                ele.removeClass('error');
+            }
+        });
 };
 
 var switchValueType = function(value, type) {
@@ -161,21 +242,17 @@ var value2object = function(value) {
             temp[i] = value[i];
         }
     }
-    else {
-        temp.key = value;
-    }
     return temp;
 };
 
 var value2default = function(value) {
     if($.isArray(value)) {
-        return value.join(', ');
+        return grid.helper.column.render.joinArray(', ', value);
     }
-    var temp = [];
-    for(var i in value) {
-        temp.push(i + ':' + value[i]);
+    if (typeof value === 'object') {
+        return grid.helper.column.render.joinObject('; ' , data);
     }
-    return temp.join(';');
+    return value;
 };
 
 var changeName = function(e) {
@@ -196,7 +273,6 @@ var changeValue = function(e) {
             model.value = getObjectValue(ele);
             break;
         default:
-            console.log(getDefaultValue(ele));
             model.value = getDefaultValue(ele);
             break;
     }
@@ -224,7 +300,7 @@ var getDefaultValue = function(ele) {
 };
 
 var saveValue = function(ele) {
-    if(!validateFrom(ele)) {
+    if(! validateFrom(ele)) {
         return;
     }
     Util.ajax({
@@ -232,45 +308,32 @@ var saveValue = function(ele) {
         method: 'post',
         data: model,
         dataType: 'json',
-        showMessage : true,
+        showMessage: true,
         success: function(result) {
             if(result.status === 200) {
                 var item = grid.itemById(model.name);
-                if (item) {
-                    grid.updateById(model.name , model);
+                if(item) {
+                    grid.updateById(model.name, model);
                 }
                 else {
                     grid.addRow(model);
                 }
                 model = {};
+                Util.hideModal(ele);
             }
-            else {
-                Widget.notify({
-                    title : result.status === 200 ? 'Success':'Error',
-                    text : result.message || (result.status === 200 ? 'Action success':'Something when wrong'),
-                    type : result.status === 200 ? 'success':'error'
-                });
-            }
+            Notice.ajaxResult(result);
         }
     });
 };
 
-var validateFrom = function(ele){
-    if (!model.name) {
-        Widget.notify({
-            title : 'Error',
-            type:'error',
-            text : 'Setting Name is required',
-        });
+var validateFrom = function(ele) {
+    if(! model.name) {
+        Notice.error('Setting Name is required');
         return false;
     }
-    if (!model.value || $.isEmptyObject(model.value)) {
-        Widget.notify({
-            title : 'Error',
-            type:'error',
-            text : 'Setting value is required',
-        });
+    if(! model.value || $.isEmptyObject(model.value)) {
         return false;
+        Notice.error('Setting value is required');
     }
     return true;
 };
@@ -292,12 +355,14 @@ var validateFrom = function(ele){
                     if($.isArray(data)) {
                         return grid.helper.column.render.joinArray(', ', data);
                     }
+                    if (typeof data === 'object') {
+                        return grid.helper.column.render.joinObject('; ' , data);
+                    }
                     return data;
                 }
             }
         ],
         onInit: function() {
-            console.log($(arguments[0].target).find('tbody tr').length);
         },
         rowId: 'name'
     });

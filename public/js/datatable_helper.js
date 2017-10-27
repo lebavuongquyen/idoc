@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* global addItem */
+/* global addItem, Util, activeItem */
 
 'use strict';
 var addItem, editItem, deleteItem, saveItem;
@@ -32,11 +32,25 @@ DataTableColumn.prototype.action = function($actions, $opt) {
         title: _opt.title || 'Actions',
         width: _opt.width || '80px',
         className: 'action-column ' + (_opt.className || ''),
-        render: function($value) {
+        render: (typeof _opt.render === 'function') ? _opt.render : function($value) {
             return self.render.action($actions, $value);
         }
     };
-}
+};
+
+DataTableColumn.prototype.active = function($opt) {
+    var self = this;
+    var _opt = $opt || {};
+    return {
+        data: _opt.data,
+        title: _opt.title || 'Actived',
+        width: _opt.width || '80px',
+        className: 'cell-text-center ' + (_opt.className || ''),
+        render: (typeof _opt.render === 'function') ? _opt.render : function($value) {
+            return self.render.active($value , _opt);
+        }
+    };
+};
 
 var DataTableColumnRender = function() {
     return this;
@@ -46,6 +60,14 @@ DataTableColumnRender.prototype.joinArray = function($delimiter, $list) {
     return $list.join($delimiter);
 };
 
+DataTableColumnRender.prototype.joinObject = function($delimiter, $obj) {
+    var $list = [];
+    for(var i in $obj) {
+        $list.push(i + ':' + $obj[i]);
+    }
+    return this.joinArray($delimiter, $list);
+};
+
 DataTableColumnRender.prototype.action = function($actions, $data) {
     var _str = '';
     var button = new DataTableButton();
@@ -53,6 +75,11 @@ DataTableColumnRender.prototype.action = function($actions, $data) {
         _str += button.render($actions[i], $data);
     }
     return _str;
+};
+
+DataTableColumnRender.prototype.active = function($value, $option) {
+    var button = new DataTableButton();
+    return button.render(button.active($value , $option),$value);
 };
 
 var DataModel = function($item) {
@@ -78,7 +105,7 @@ DataTableButton.prototype.add = function($option) {
         class: _opt.class || '',
         display: _opt.display || 'icon-only',
         click: _opt.click || (typeof addItem === 'function' ? 'addItem(event , this);' : ''),
-        data: _opt.data || null,
+        data: _opt.data || null
     };
 };
 
@@ -91,7 +118,7 @@ DataTableButton.prototype.edit = function($option) {
         class: _opt.class || '',
         display: _opt.display || 'icon-only',
         click: _opt.click || (typeof editItem === 'function' ? 'editItem(event , this);' : ''),
-        data: _opt.data || null,
+        data: _opt.data || null
     };
 };
 
@@ -104,7 +131,22 @@ DataTableButton.prototype.delete = function($option) {
         class: _opt.class || '',
         display: _opt.display || 'icon-only',
         click: _opt.click || (typeof deleteItem === 'function' ? 'deleteItem(event , this);' : ''),
-        data: _opt.data || null,
+        data: _opt.data || null
+    };
+};
+
+DataTableButton.prototype.active = function($value, $option) {
+    var _opt = $option || {};
+    var _active = $value ? 'Actived' : 'Inactived';
+    var _icon = $value ? 'check-circle-o' : 'ban';
+    return {
+        title: _opt.title || _active + ' item',
+        text: _opt.text || _active,
+        icon: _opt.icon || _icon,
+        class: _opt.class || '',
+        display: _opt.display || 'icon-only',
+        click: _opt.click || (typeof activeItem === 'function' ? 'activeItem(event , this);' : ''),
+        data: _opt.data || null
     };
 };
 
@@ -133,9 +175,6 @@ DataTableButton.prototype.render = function($item, $data) {
         }
     };
     var getData = function() {
-        if(typeof $item.data === 'string') {
-            return $item.data;
-        }
         if(typeof $item.data === 'object') {
             var _str = ' ';
             for(var i in $item.data) {
@@ -146,13 +185,10 @@ DataTableButton.prototype.render = function($item, $data) {
         if(typeof $item.data === 'function') {
             return $item.data();
         }
-        return '';
+        return $item.data;
     };
 
     var getDataValue = function() {
-        if(typeof $data === 'string') {
-            return 'data-value="' + $data + '"';
-        }
         if(typeof $data === 'object') {
             var _str = ' ';
             for(var i in $data) {
@@ -160,7 +196,7 @@ DataTableButton.prototype.render = function($item, $data) {
             }
             return _str;
         }
-        return '';
+        return 'data-value="' + $data + '"';
     };
 
     return '<a class="btn-table btn-link ' + cls
@@ -224,9 +260,9 @@ DataTableApi.prototype.addRows = function(dt, datas) {
 
 DataTableApi.prototype.insertRow = function(dt, index, item, callback) {
     var _data = dt.data().toArray();
-    _data = Util.arrayInsert(_data , index , item);
+    _data = Util.arrayInsert(_data, index, item);
     this.clear(dt);
-    this.addRows(dt , _data);
+    this.addRows(dt, _data);
     dt.draw();
     if(typeof callback === 'function') {
         callback(dt, index, item);
@@ -272,7 +308,7 @@ var Grid = function($target, $opt) {
     this.options = {
         dom: "Bfrtip",
         buttons: this.helper.button.common(),
-        responsive: true,
+//        responsive: true,
         lengthMenu: [[10, 25, 50, - 1], [10, 25, 50, "All"]],
         columns: [],
         order: [[1, "asc"]],
@@ -286,7 +322,7 @@ var Grid = function($target, $opt) {
             selector: 'td:not(".action-column")'
         },
         autoWidth: true,
-        deferRender: _opt.data ? true : false,
+        deferRender: _opt.data ? _opt.data : false,
         info: true,
         language: {
             decimal: "",
@@ -310,7 +346,7 @@ var Grid = function($target, $opt) {
             aria: {
                 sortAscending: ": activate to sort column ascending",
                 sortDescending: ": activate to sort column descending"
-            },
+            }
         },
         processing: false,
         serverSite: _opt.ajax ? true : false,
@@ -318,10 +354,9 @@ var Grid = function($target, $opt) {
         destroy: true,
         createdRow: function(row, data, dataIndex) {},
         colReorder: true,
-        rowId: 'id',
-//        rowReorder : {
-//            selector : 'td:not(".action-column")'
-//        }
+        rowId: 'row_id',
+        scrollX: true,
+        id : 'id',
     };
     this.setOptions($opt);
     return this;
@@ -441,7 +476,7 @@ Grid.prototype.rowById = function($id) {
 };
 
 Grid.prototype.itemById = function($id) {
-    var rowId = this.options.rowId;
+    var rowId = this.options.id;
     return this.data().find(function(item) {
         return item[rowId] == $id;
     });

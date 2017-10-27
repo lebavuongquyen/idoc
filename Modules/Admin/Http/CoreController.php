@@ -1,5 +1,4 @@
 <?php
-
 namespace Admin\Http;
 
 use Illuminate\Http\Request;
@@ -21,16 +20,18 @@ class CoreController extends Controller
 {
 
     protected $result = [
-        'status'  => 200,
-        'data'    => [],
+        'status' => 200,
+        'data' => [],
         'message' => 'Success',
-        'errors'  => [],
-        'total'   => 0
+        'errors' => [],
+        'total' => 0
     ];
+    protected $item;
     public $controller;
     public $action;
     public $name;
     public $page;
+    public $viewPath;
 
     public function __construct()
     {
@@ -41,7 +42,8 @@ class CoreController extends Controller
     {
         list($this->controller, $this->action) = explode('@', \Route::current()->getActionName());
         $this->controller = preg_replace('/.*\\\/', '', $this->controller);
-        $this->name       = strtolower(str_replace('Controller', '', $this->controller));
+        $this->name = strtolower(str_replace('Controller', '', $this->controller));
+        $this->viewPath = kebab_case(str_replace('Controller', '', $this->controller));
     }
 
     /**
@@ -54,62 +56,6 @@ class CoreController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
-    {
-        return view('admin::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        
-    }
-
-    /**
-     * Show the specified resource.
-     * @return Response
-     */
-    public function show()
-    {
-        return view('admin::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
-    {
-        return view('admin::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function update(Request $request)
-    {
-        
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @return Response
-     */
-    public function destroy()
-    {
-        
-    }
-
-    /**
      * Get the evaluated view contents for current route.
      * 
      * @param array $data
@@ -118,7 +64,7 @@ class CoreController extends Controller
      */
     public function render($data = [], $mergeData = [])
     {
-        $view = "admin::{$this->name}.{$this->action}";
+        $view = "admin::{$this->viewPath}.{$this->action}";
         return view($view, $data, $mergeData)->with('page', $this->page);
     }
 
@@ -128,9 +74,31 @@ class CoreController extends Controller
      */
     public function model()
     {
-        return null;
+        return new \Eloquent;
     }
 
+    /**
+     * 
+     * @return []
+     */
+    public function modelWith()
+    {
+        return [];
+    }
+
+    /**
+     * 
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function modelQuery()
+    {
+        return $this->model()->with($this->modelWith());
+    }
+
+    public function modelDefaultScope($query)
+    {
+        return $query;
+    }
     /*
      * @param mixed $data
      */
@@ -143,8 +111,93 @@ class CoreController extends Controller
             is_array($data) || is_a($data, 'Illuminate\Database\Eloquent\Collection')
             )
         ) {
-            $this->result['total'] = count($data);
+            $this->setTotal(count($data));
         }
     }
+    /*
+     * @param integer $total
+     */
 
+    public function setTotal(int $total)
+    {
+        $this->result['total'] = $total;
+    }
+
+    public function get($id = null, Request $request)
+    {
+        $query = $this->modelDefaultScope($this->modelQuery());
+        if ($id) {
+            $item = $query->find($id);
+            if (!$item) {
+                abort(404, 'Item not found!');
+            }
+            $this->setData($item);
+        } else {
+            if (!empty($request->get('length'))) {
+                $query->limit($request->get('length'));
+            }
+            if (!empty($request->get('start'))) {
+                $query->offset($request->get('start'));
+            }
+
+            $list = $query->get();
+            $this->setData($list);
+            $this->setTotal($this->model()->count());
+            $this->dataTable($request);
+        }
+        return $this->result;
+    }
+
+    public function dataTable(Request $request)
+    {
+        $this->result['draw'] = $request->get('draw');
+        $this->result['recordsTotal'] = $this->result['total'];
+        $this->result['recordsFiltered'] = $this->result['total'];
+        foreach ($this->result['data'] as &$val) {
+            $val['row_id'] = 'row_' . $val['id'];
+        }
+        return $this->result;
+    }
+
+    public function getItem($id)
+    {
+        if (empty($this->item) || $this->item->id != $id) {
+            $this->item = $this->modelDefaultScope($this->modelQuery())->find($id);
+            if (!$this->item) {
+                abort(404, 'Item not found.');
+            }
+        }
+
+        return $this->item;
+    }
+
+    public function prepareNew($model)
+    {
+        return $model;
+    }
+
+    public function additionalData($id = null)
+    {
+        return [];
+    }
+
+    public function create(Request $request)
+    {
+        return $this->render(['model' => $this->prepareNew($this->model())], $this->additionalData());
+    }
+
+    public function update($id, Request $request)
+    {
+        return $this->render(['model' => $this->getItem($id)], $this->additionalData($id));
+    }
+
+    public function view($id, Request $request)
+    {
+        return $this->render(['model' => $this->getItem($id)], $this->additionalData($id));
+    }
+
+    public function save($id = null, Request $request)
+    {
+        return $this->result;
+    }
 }

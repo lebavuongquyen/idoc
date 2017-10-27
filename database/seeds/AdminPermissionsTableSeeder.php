@@ -15,15 +15,21 @@ class AdminPermissionsTableSeeder extends Seeder
         DB::table('admin_permissions')->insert([
             [
                 'name'      => 'admin/dashboard',
-                'group_ids' => '[1]',
             ],
             [
                 'name'      => 'admin/setting',
-                'group_ids' => '[1]',
             ],
             [
                 'name'      => 'admin/setting_save',
-                'group_ids' => '[1]',
+            ],
+            [
+                'name'      => 'admin/setting_delete',
+            ],
+            [
+                'name'      => 'admin/admin_permission',
+            ],
+            [
+                'name'      => 'admin/admin_permission_grant',
             ],
         ]);
 

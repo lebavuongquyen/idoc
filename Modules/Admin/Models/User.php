@@ -1,10 +1,8 @@
 <?php
-
 /**
  * Created by Reliese Model.
  * Date: Thu, 17 Aug 2017 09:06:18 +0000.
  */
-
 namespace Admin\Models;
 
 use Illuminate\Notifications\Notifiable;
@@ -24,11 +22,12 @@ class User extends \IDoc\Models\Base\User implements AuthenticatableContract, Au
     use \Znck\Eloquent\Traits\BelongsToThrough;
     use \Illuminate\Database\Eloquent\SoftDeletes;
     use \IDoc\Models\Attributes\User;
+    use \IDoc\Models\Attributes\Treeable;
     use Authenticatable,
         Authorizable,
         CanResetPassword,
         Notifiable;
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -61,6 +60,9 @@ class User extends \IDoc\Models\Base\User implements AuthenticatableContract, Au
      */
     public function isAllowed($name)
     {
+        if ($this->role->group->id === 1) {
+            return true;
+        }
         return in_array($name, $this->permissions());
     }
 
@@ -71,9 +73,15 @@ class User extends \IDoc\Models\Base\User implements AuthenticatableContract, Au
     public function permissions()
     {
         if (!isset($this->_permissions)) {
-            $this->_permissions = AdminPermission::where('group_ids', 'like', "%" . brace($this->group->id) . "%")
-                    ->orWhere('role_ids', 'like', "%" . brace($this->role->id) . "%")
-                    ->orWhere('user_ids', 'like', "%" . brace($this->id) . "%")
+            $this->_permissions = AdminPermission::where(function($query) {
+                        $query->whereNull('banned_user_ids')
+                        ->orWhere('banned_user_ids', 'not like', "%" . brace($this->id) . "%");
+                    })
+                    ->where(function($query) {
+                        $query->where('group_ids', 'like', "%" . brace($this->group->id) . "%")
+                        ->orWhere('role_ids', 'like', "%" . brace($this->role->id) . "%")
+                        ->orWhere('user_ids', 'like', "%" . brace($this->id) . "%");
+                    })
                     ->select('name')
                     ->get()->transform(function($item, $key) {
                     return $item->name;
@@ -81,5 +89,4 @@ class User extends \IDoc\Models\Base\User implements AuthenticatableContract, Au
         }
         return $this->_permissions;
     }
-    
 }

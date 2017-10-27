@@ -4,6 +4,7 @@ namespace IDoc\Models;
 
 class UserGroup extends \IDoc\Models\Base\UserGroup
 {
+    use \IDoc\Models\Attributes\Treeable;
 	protected $fillable = [
 		'name',
 		'short_name'
@@ -17,7 +18,4 @@ class UserGroup extends \IDoc\Models\Base\UserGroup
         return $this->hasManyThrough(User::class, UserRole::class,'group_id' , 'role_id' , 'id' );
     }
     
-    public function pr() {
-        return $this->belongsTo(self::class , 'parent_id');
-    }
 }

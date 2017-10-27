@@ -6,6 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateAdminPermissionsTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -13,13 +14,18 @@ class CreateAdminPermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('admin_permissions', function(Blueprint $table){
-            $table->increments('id');
-            $table->string('name')->unique();
-            $table->string('group_ids')->nullable();
-            $table->string('role_ids')->nullable();
-            $table->string('user_ids')->nullable();
-        });
+        try {
+            Schema::create('admin_permissions', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('name', 250)->unique();
+                $table->string('group_ids', 250)->nullable();
+                $table->string('role_ids', 250)->nullable();
+                $table->string('user_ids', 250)->nullable();
+                $table->string('banned_user_ids', 250)->nullable();
+            });
+        } catch (Exception $ex) {
+            
+        }
     }
 
     /**
