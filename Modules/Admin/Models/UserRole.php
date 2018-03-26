@@ -8,7 +8,8 @@ class UserRole extends \IDoc\Models\Base\UserRole
 	protected $fillable = [
 		'name',
 		'short_name',
-		'group_id'
+		'group_id',
+        'parent_id'
 	];
     
     public function group(){

@@ -104,12 +104,17 @@ table[role=grid] tbody tr.selected td.active {
     margin-left: 5px;
 }
 
-input.error {
-    border-color: #a94442;
+.error {
+    border-color: #ff0000;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 }
 
 td.cell-text-center {
     text-align: center;
+}
+
+div.dataTables_wrapper div.dataTables_processing {
+    padding-top:5px;
+    z-index: 50;
 }

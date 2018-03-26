@@ -40,6 +40,7 @@
 {!!qjs('public/vendors/lockscreen/js/lockscreen.js')!!}
 {!!qjs('public/vendors/lockscreen/js/lockscreen-icon.js')!!}
 <!-- Ben Alman deparam-->
+{!!qjs('public/vendors/jquery-browser/dist/jquery.browser.min.js')!!}
 {!!qjs('public/vendors/jquery-bbq/jquery.ba-bbq.min.js')!!}
 
 

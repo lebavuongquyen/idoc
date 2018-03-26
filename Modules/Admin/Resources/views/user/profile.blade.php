@@ -34,7 +34,7 @@
                     <br />
 
                     <!-- start messages -->
-                    <a href="{{route('admin/user_message')}}"><h4>Messages</h4></a>
+                    <a href="{{route('admin.user_message')}}"><h4>Messages</h4></a>
                     <ul class="list-unstyled user_data msg_list">
                     </ul>
                     <!-- end of messages -->

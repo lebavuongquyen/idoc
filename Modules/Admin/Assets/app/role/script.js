@@ -13,12 +13,13 @@ addItem = function(e) {
     loadForm();
 };
 editItem = function(e, ele) {
-    window.location = url(controller + '/update/' + ele.data('value'));
+    loadForm($(ele).data('value'));
 };
 deleteItem = function(e, ele) {
     var id = $(ele).data('value');
+    var item = grid.itemById(id);
     Widget.confirm({
-        content: 'Do you really want to delete ' + id,
+        content: 'Do you really want to delete ' + item.name,
         yes: function() {
             Util.ajax({
                 url: url(controller + '/destroy'),
@@ -35,9 +36,65 @@ deleteItem = function(e, ele) {
         }
     });
 };
-var loadForm = function() {
 
+var loadForm = function($id, $view) {
+    var _action = $view ? 'view' : ($id ? 'update' : 'create');
+    Util.ajax({
+        url: url(controller + '/' + _action + ($id ? '/' + $id : '')),
+        success: function(result) {
+            Widget.dialog({
+                title: _action.capitalize() + ' ' + module,
+                content: result,
+                buttons: [
+                    {
+                        text: 'Save', float: 'right',
+                        click: function(e) {
+                            e.data.modal.find('form').submit();
+                        }
+                    }
+                ],
+                shown: function(e) {
+                    var frm = e.data.modal.find('form');
+                    frm.qvalidate(
+                        {
+                            rules: {
+                                name: {
+                                    remote: validateRemoteUnique(
+                                        frm.find('[name=name]'),
+                                        {id: $id, url: url(controller + '/validate-unique')}
+                                    )
+                                }
+                                ,
+                                short_name: {
+                                    remote: validateRemoteUnique(
+                                        frm.find('[name=short_name]'),
+                                        {id: $id, url: url(controller + '/validate-unique')}
+                                    )
+                                }
+                            },
+                            messages : {
+                                name : {
+                                    remote : 'Group name has been used!'
+                                },
+                                short_name : {
+                                    remote : 'Group short name has been used!'
+                                }
+                            },
+                            model : true
+                        },
+                        function(result) {
+                            if(result.status === 200) {
+                                e.data.modal.modal('hide');
+                                grid.reload();
+                            }
+                        }
+                    );
+                }
+            });
+        }
+    });
 };
+
 (function() {
     "use strict";
     grid = new Grid($('#datatable'));

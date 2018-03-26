@@ -117,8 +117,8 @@ var app = new Admin();
      * Top menu user message
      */
     app.userMessage = new UserMessage();
-    app.userMessage.lastestMessage();
-    app.userMessage.updateMessage();
+//    app.userMessage.lastestMessage();
+//    app.userMessage.updateMessage();
     
     /**
      * Lockscreen

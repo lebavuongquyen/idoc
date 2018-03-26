@@ -14,7 +14,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
                         <li>
-                            <a href="{{route('admin/user_profile')}}">
+                            <a href="{{route('admin.user_profile')}}">
                                 <span class="badge bg-red pull-right">50%</span>
                                 <span>Profile</span>
                             </a>

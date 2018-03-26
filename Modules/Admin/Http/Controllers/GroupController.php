@@ -27,8 +27,9 @@ class GroupController extends Controller
                 $data['parents'] = $this->model()->whereNotIn('id', $descendantsIds)->get();
             }
         }
-
-        $data['parents'] = $this->model()->all();
+        else {
+            $data['parents'] = $this->model()->where('id' , '<>' , $id)->get();
+        }
         return $data;
     }
 }

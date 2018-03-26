@@ -487,7 +487,7 @@ Grid.prototype.reload = function(callback) {
 };
 
 Grid.prototype.itemIndex = function($id) {
-    var rowId = this.options.rowId;
+    var rowId = this.options.id;
     return this.data().findIndex(function(item) {
         return item[rowId] == $id;
     });

@@ -64,14 +64,6 @@
         </div>
     </div>
 </form>
-<div id="object_key" class="form-group" style="display: none;">
-    <div class="col-xs-6">
-        <input type="text" name="keys[0]" class="form-control input object-keys" value="" placeholder="key">
-    </div>
-    <div class="col-xs-6">
-        <input type="text" name="values[0]" class="form-control input object-values" value="" placeholder="value">
-    </div>
-</div>
 <!-- /page content -->
 @endsection 
 

@@ -1,4 +1,4 @@
-/* global baseUrl,$, jQuery, moment, createUrl, ss, Notification */
+/* global baseUrl,$, jQuery, moment, createUrl, ss, Notification, stopReloader, startReloader, decodeURI, Qlog, Lang */
 var AjaxList = [];
 var QLog = function($type) {
     var args = [];
@@ -67,7 +67,7 @@ var Util = {
                     Widget.notify({
                         title: result.status === 200 ? 'Success' : 'Error',
                         text: result.message || (result.status === 200 ? 'Action success.' : 'Something went wrong.'),
-                        type: result.status === 200 ? 'success' : 'error',
+                        type: result.status === 200 ? 'success' : 'error'
                     });
                 }
             },
@@ -259,15 +259,9 @@ var Util = {
                 keyboard.$preview[0].select();
             },
             beforeVisible: function(e, keyboard, el) {
-                if(typeof stopReloader === "function") {
-                    stopReloader();
-                }
                 $("body").append("<div class=\"modal keypad-backdrop\" style=\"display:block;\"></div>");
             },
             hidden: function(e, keyboard, el) {
-                if(typeof startReloader === "function") {
-                    startReloader();
-                }
                 $(".keypad-backdrop").remove();
             }
         };
@@ -525,7 +519,6 @@ var Util = {
                             console.log(error);
                         });
                     }
-                    s
                 }
             });
         }
@@ -626,7 +619,7 @@ var Util = {
     query2obj: function(search) {
         return JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,
             '":"') + '"}');
-    },
+    }
 };
 var Widget = {
     numpad: function($data, $opener) {
@@ -716,7 +709,7 @@ var Widget = {
             buttons: [
                 {text: 'Yes', float: 'right', class: 'widget-confirm-yes btn-primary', dismiss: true, click: $data.yes
                 },
-                {text: 'No', float: 'left', class: 'widget-confirm-no', dismiss: true, click: $data.no},
+                {text: 'No', float: 'left', class: 'widget-confirm-no', dismiss: true, click: $data.no}
             ],
             hideClose: true,
             width: $data.width || '300px'
@@ -842,7 +835,7 @@ var Widget = {
                     swipe_dismiss: true
                 },
                 buttons: {
-                    sticker: false,
+                    sticker: false
                 },
                 delay: 5000,
                 closeonclick: true
@@ -885,7 +878,7 @@ CONFIG = $.extend({}, {
     LIST_STARTED_STATUS: ['Job Start'],
     SERVER_TIMEZONE: 'America/Mexico_City',
     TIME_BEFORE_END_SHIFT: 300, //second
-    DELAY_WARNING_END_SHIFT: 300, //second
+    DELAY_WARNING_END_SHIFT: 300 //second
 }, CONFIG);
 var LS = {
     set: function($key, $data, $cache_expired) {
@@ -991,7 +984,7 @@ function requestFullScreen(el) {
             wscript.SendKeys("{F11}");
         }
     }
-    return false
+    return false;
 }
 
 var App = {
@@ -1049,7 +1042,8 @@ if(jQuery.validator) {
     });
     jQuery.extend(jQuery.validator.messages, {
         required: function(invalid, ele) {
-            return $(ele).data('msg-required') || "The field " + ele.name.replace('_' , ' ').capitalize(true) + " is required.";
+            return $(ele).data('msg-required') || "The field " + ele.name.replace('_', ' ').capitalize(
+                true) + " is required.";
         },
         remote: "Please fix this field.",
         email: "Please enter a valid email address.",
@@ -1072,7 +1066,7 @@ if(jQuery.validator) {
 
 var Reg = {
     HHmm: /([0-1][0-9]|2[0-3]):[0-5][0-9]/,
-    HHmmss: /([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]/,
+    HHmmss: /([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]/
 };
 var SSKEY = {
     INTERVAL: 'INTERVAL',
@@ -1412,10 +1406,10 @@ var QValidator = function($form, $opt, $callback) {
         $event.preventDefault();
         var _ajaxOption = {
             url: $($form).attr('action'),
-            data: $($form).serializeObject(),
+            data: _opt.model ?{model : $($form).serializeObject()} : $($form).serializeObject(),
             method: 'post',
             dataType: 'json',
-            showMessage: true,
+            showMessage: true
         };
         if(typeof $callback === 'function') {
             _ajaxOption.success = $callback;
@@ -1425,13 +1419,16 @@ var QValidator = function($form, $opt, $callback) {
     };
     _frm.validate(_opt);
 };
+
 $.fn.qvalidate = function($opt, $callback) {
     QValidator(this, $opt, $callback);
 };
+
 var dataFilterUniqueDefault = function($result) {
-    return $result.status < 1;
+    return $result.status === 200;
 };
-function validateRemote($ele, $url, $dataFilter) {
+
+var validateRemote = function($ele, $url, $dataFilter) {
     var _url = $url || $ele.data('remote-url');
     if(! _url) {
         console.log('Remote url is not found!');
@@ -1455,10 +1452,38 @@ function validateRemote($ele, $url, $dataFilter) {
             return dataFilterUniqueDefault(result);
         }
     };
-}
+};
+
+var validateRemoteUnique = function($ele,$opt) {
+    var _url = $opt.url || $ele.data('remote-url');
+    if(! _url) {
+        console.log('Remote url is not found!');
+        return false;
+    }
+    return {
+        url: _url,
+        dataType: 'json',
+        data: {
+            id: $opt.id || $ele.data('id'),
+            key: $opt.key || $ele.attr('name'),
+            value: function() {
+                return $ele.val();
+            }
+        },
+        dataFilter: function(result) {
+            if(typeof result === 'string') {
+                result = JSON.parse(result);
+            }
+            if(typeof $opt.dataFilter === 'function') {
+                return $opt.dataFilter(result);
+            }
+            return dataFilterUniqueDefault(result);
+        }
+    };
+};
 
 
-function isUploadSupported() {
+var isUploadSupported = function() {
     if(navigator.userAgent.match(
         /(Android (1.0|1.1|1.5|1.6|2.0|2.1))|(Windows Phone (OS 7|8.0))|(XBLWP)|(ZuneWP)|(w(eb)?OSBrowser)|(webOS)|(Kindle\/(1.0|2.0|2.5|3.0))/)) {
         return false;
@@ -1633,14 +1658,14 @@ String.prototype.format = function(col) {
     });
 };
 
-function getYesNo(value) {
+var getYesNo = function(value) {
     if(typeof (value) === 'undefined' || value + '' === '0') {
         return Lang.Comon.no.capitalize();
     }
     return Lang.Comon.yes.capitalize();
-}
+};
 
-function emptyFromColumn($column) {
+var emptyFromColumn = function($column) {
     var _column = $column || [];
     var _object = {};
     _column.forEach(function(x) {
@@ -1649,9 +1674,9 @@ function emptyFromColumn($column) {
         }
     });
     return _object;
-}
+};
 
-function emptyFromObj($obj) {
+var emptyFromObj = function($obj) {
     var _object = {};
     Object.keys($obj).forEach(function(x) {
         if(x) {
@@ -1659,9 +1684,9 @@ function emptyFromObj($obj) {
         }
     });
     return _object;
-}
+};
 
-function arrayMin($arr, $length, $emptyObj) {
+var arrayMin = function($arr, $length, $emptyObj) {
     var _arr = $arr || [];
     var _length = $length || 10;
     var _obj = {};
@@ -1679,7 +1704,7 @@ function arrayMin($arr, $length, $emptyObj) {
         }
     }
     return _arr;
-}
+};
 
 window.onbeforeunload = window.onunload = function() {
     for(var x in AjaxList) {
@@ -1705,7 +1730,7 @@ var Notice = {
                     swipe_dismiss: true
                 },
                 buttons: {
-                    sticker: false,
+                    sticker: false
                 },
                 delay: 5000,
                 closeonclick: true

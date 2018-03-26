@@ -8,7 +8,8 @@ class UserGroup extends \IDoc\Models\Base\UserGroup
 
     protected $fillable = [
         'name',
-        'short_name'
+        'short_name',
+        'parent_id'
     ];
 
     public function roles()

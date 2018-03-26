@@ -20,4 +20,21 @@ class RoleController extends Controller
         return ['group' , 'pr'];
     }
     
+    public function additionalData($id = null)
+    {
+        $data = [];
+        if (\Setting::get('admin:role_parent_to_children')) {
+            if ($id) {
+                $descendantsIds = $this->model()->descendantsIds([$id], [$id]);
+                $data['parents'] = $this->model()->whereNotIn('id', $descendantsIds)->get();
+            }
+        }
+        else {
+            $data['parents'] = $this->model()->where('id' , '<>' , $id)->get();
+        }
+        
+        $data['groups'] = \Admin\Models\UserGroup::orderBy('name')->get();
+        return $data;
+    }
+    
 }

@@ -40,10 +40,13 @@ class CoreController extends Controller
 
     protected function setController()
     {
-        list($this->controller, $this->action) = explode('@', \Route::current()->getActionName());
-        $this->controller = preg_replace('/.*\\\/', '', $this->controller);
-        $this->name = strtolower(str_replace('Controller', '', $this->controller));
-        $this->viewPath = kebab_case(str_replace('Controller', '', $this->controller));
+        $routeName = \Route::current()->getActionName();
+        if ($routeName !== 'Closure') {
+            list($this->controller, $this->action) = explode('@', $routeName);
+            $this->controller = preg_replace('/.*\\\/', '', $this->controller);
+            $this->name = strtolower(str_replace('Controller', '', $this->controller));
+            $this->viewPath = kebab_case(str_replace('Controller', '', $this->controller));
+        }
     }
 
     /**
@@ -198,6 +201,28 @@ class CoreController extends Controller
 
     public function save($id = null, Request $request)
     {
+        $this->item = $this->model()->updateOrCreate(['id' => $id] , $request->get('model'));
+        $this->result['data'] = $this->item->toArray();
+        return $this->result;
+    }
+
+    public function destroy(Request $request)
+    {
+        $this->getItem($request->get('id'))->delete();
+        return $this->result;
+    }
+
+    public function validateUnique(Request $request)
+    {
+
+        $query = $this->model()->where($request->get('key'), $request->get('value'));
+        if ($request->get('id')) {
+            $query->where('id', '<>', $request->get('id'));
+        }
+        if ($query->count()) {
+            $this->result['status'] = 1100;
+            $this->result['message'] = 'Has been used.';
+        }
         return $this->result;
     }
 }

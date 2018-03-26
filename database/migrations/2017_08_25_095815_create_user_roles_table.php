@@ -15,11 +15,12 @@ class CreateUserRolesTable extends Migration
     {
         Schema::create('user_roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->unique();
-            $table->string('short_name')->unique();
-            $table->string('group_id')->unique();
+            $table->string('name');
+            $table->string('short_name');
+            $table->string('group_id');
             $table->integer('parent_id')->nullable();
             $table->softDeletes();
+            $table->unique(['name' , 'short_name' , 'deleted_at'] , 'item_unique');
         });
     }
 

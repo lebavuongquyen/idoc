@@ -44,7 +44,7 @@ var loadForm = function($id) {
     }
     var content = formContent($id);
     Util.modal({
-        title: 'Add ' + module,
+        title: ($id ? 'Update' : 'Add ') + module,
         content: content,
         width: '300px',
         buttons: [
@@ -262,6 +262,7 @@ var changeName = function(e) {
 var changeValue = function(e) {
     var ele = $(e.target).parents('.modal');
     var type = ele.find('button.active').val();
+    model.name = ele.find('input[name=name]').val();
     switch(type) {
         case 'array':
             var value = getArrayValue(ele);
@@ -364,7 +365,8 @@ var validateFrom = function(ele) {
         ],
         onInit: function() {
         },
-        rowId: 'name'
+        rowId: 'name',
+        id : 'name'
     });
     grid.render();
 })();
